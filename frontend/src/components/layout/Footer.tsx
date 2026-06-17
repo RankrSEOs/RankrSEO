@@ -12,10 +12,11 @@ const quickLinks = [
 ]
 
 const socialLinks = [
-  { label: "LinkedIn", href: "#" },
-  { label: "Twitter", href: "#" },
-  { label: "Facebook", href: "#" },
-  { label: "Instagram", href: "#" },
+  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=100089141288063" },
+  { label: "Twitter", href: "https://www.twitter.com/rankrseo" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rankrseo/" },
+  { label: "Instagram", href: "https://www.instagram.com/rankrseo/" },
+  { label: "YouTube", href: "https://www.youtube.com/@rankrseo" },
 ]
 
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
@@ -89,20 +90,20 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:hello@rankrseo.com"
+                  href="mailto:rankrseo@gmail.com"
                   className="flex items-center gap-3 text-sm text-gray-400 transition-colors hover:text-white"
                 >
                   <Mail className="size-4 shrink-0 text-primary" />
-                  <span>hello@rankrseo.com</span>
+                  <span>rankrseo@gmail.com</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+919999999999"
+                  href="tel:+919953732860"
                   className="flex items-center gap-3 text-sm text-gray-400 transition-colors hover:text-white"
                 >
                   <Phone className="size-4 shrink-0 text-primary" />
-                  <span>+91-9999999999</span>
+                  <span>+91-9953732860</span>
                 </a>
               </li>
               <li>

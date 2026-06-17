@@ -10,6 +10,7 @@ import {
   Palette,
   Building2,
   BarChart3,
+  Share2,
   Check,
   ArrowRight,
   Star,
@@ -37,6 +38,7 @@ const iconMap: Record<string, typeof Search> = {
   Palette,
   Building2,
   BarChart3,
+  Share2,
 }
 
 const processSteps = [
@@ -145,6 +147,11 @@ const faqData: Record<string, { q: string; a: string }[]> = {
     { q: "What is Google Business Profile optimization?", a: "GBP optimization involves fully setting up and optimizing your business listing to appear in local search results and Google Maps." },
     { q: "How long does GBP optimization take?", a: "Initial setup and verification takes 1-2 weeks, while full optimization is ongoing for best results." },
     { q: "Can you help with review management?", a: "Yes, we help implement a review generation strategy and manage responses to maintain a positive reputation." },
+  ],
+  "social-media": [
+    { q: "Which social media platforms do you manage?", a: "We manage Instagram, Facebook, LinkedIn, and YouTube — selecting platforms based on where your target audience is most active." },
+    { q: "How long until I see results from social media marketing?", a: "You can expect to see engagement growth within 4-6 weeks, with lead generation improving over 2-3 months of consistent posting and optimization." },
+    { q: "Do you create the content or do I need to provide it?", a: "We handle everything — strategy, content creation, graphic design, copywriting, scheduling, and performance analysis. You just provide brand direction." },
   ],
   ppc: [
     { q: "How quickly will I see results from PPC?", a: "PPC campaigns can start driving traffic within hours of launch, making it the fastest channel for immediate results." },

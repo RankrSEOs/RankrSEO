@@ -10,7 +10,7 @@ export function OrganizationJsonLd() {
     foundingDate: "2022",
     founder: { "@type": "Person", name: "Amit Kumar" },
     address: { "@type": "PostalAddress", addressLocality: "Delhi", addressCountry: "IN" },
-    contactPoint: { "@type": "ContactPoint", telephone: "+91-9999999999", contactType: "customer service" },
+    contactPoint: { "@type": "ContactPoint", telephone: "+91-9953732860", contactType: "customer service" },
   }
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
@@ -23,8 +23,8 @@ export function LocalBusinessJsonLd() {
     url: "https://rankrseo.com",
     logo: "https://rankrseo.com/logo.png",
     image: "https://rankrseo.com/og-image.jpg",
-    telephone: "+91-9999999999",
-    email: "hello@rankrseo.com",
+    telephone: "+91-9953732860",
+    email: "rankrseo@gmail.com",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Connaught Place",
@@ -46,10 +46,11 @@ export function LocalBusinessJsonLd() {
       { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "16:00" },
     ],
     sameAs: [
-      "https://facebook.com/rankrseo",
-      "https://twitter.com/rankrseo",
-      "https://linkedin.com/company/rankrseo",
-      "https://instagram.com/rankrseo",
+      "https://www.facebook.com/profile.php?id=100089141288063",
+      "https://www.twitter.com/rankrseo",
+      "https://www.linkedin.com/in/rankrseo/",
+      "https://www.instagram.com/rankrseo/",
+      "https://www.youtube.com/@rankrseo",
     ],
   }
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

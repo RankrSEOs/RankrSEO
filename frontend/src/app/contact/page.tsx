@@ -31,9 +31,9 @@ const budgets = ["Under $1,000", "$1,000 - $2,500", "$2,500 - $5,000", "$5,000 -
 
 const contactInfo = [
   { icon: MapPin, label: "Visit Us", value: "Delhi, India" },
-  { icon: Mail, label: "Email Us", value: "hello@rankrseo.com", href: "mailto:hello@rankrseo.com" },
-  { icon: Phone, label: "Call Us", value: "+91-9999999999", href: "tel:+919999999999" },
-  { icon: MessageCircle, label: "WhatsApp", value: "+91-9999999999", href: "https://wa.me/919999999999" },
+  { icon: Mail, label: "Email Us", value: "rankrseo@gmail.com", href: "mailto:rankrseo@gmail.com" },
+  { icon: Phone, label: "Call Us", value: "+91-9953732860", href: "tel:+919953732860" },
+  { icon: MessageCircle, label: "WhatsApp", value: "+91-9953732860", href: "https://wa.me/919953732860" },
 ]
 
 export default function ContactPage() {

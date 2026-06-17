@@ -72,16 +72,17 @@ export default function HeroSection() {
           variants={itemVariants}
           className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          Dominate Search.{" "}
-          <span className="text-accent">Grow Your Business.</span>
+          Grow Your Business.{" "}
+          <span className="text-accent">Dominate Search.</span>
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
           className="mt-6 max-w-2xl text-base text-white/80 sm:text-lg md:text-xl"
         >
-          RankrSEO is your data-driven digital marketing agency. We help
-          businesses rank higher, attract more customers, and scale revenue.
+          RankrSEO is a results-driven digital marketing agency founded by Amit
+          Kumar. We help businesses increase online visibility, generate
+          qualified leads, and grow sustainable revenue.
         </motion.p>
 
         <motion.div
@@ -95,7 +96,7 @@ export default function HeroSection() {
               "transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
             )}
           >
-            Get a Free SEO Audit
+            Get a Free Consultation
             <ArrowRight className="size-4" />
           </Link>
           <Link

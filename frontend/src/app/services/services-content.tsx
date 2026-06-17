@@ -10,6 +10,7 @@ import {
   Palette,
   Building2,
   BarChart3,
+  Share2,
   ArrowRight,
 } from "lucide-react"
 import Link from "next/link"
@@ -26,6 +27,7 @@ const iconMap: Record<string, typeof Search> = {
   Palette,
   Building2,
   BarChart3,
+  Share2,
 }
 
 const containerVariants = {

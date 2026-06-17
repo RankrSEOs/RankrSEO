@@ -126,16 +126,30 @@ export default function AboutContent() {
               </p>
               <div className="mt-6 space-y-4 text-muted-foreground">
                 <p>
-                  Amit Kumar founded RankrSEO with a simple belief: every
-                  business deserves a fair chance to be found online. With over
-                  a decade of experience in digital marketing, he saw how many
-                  agencies over-promised and under-delivered.
+                  Amit Kumar is the Founder & CEO of RankrSEO. He holds a
+                  Master's degree in Computer Applications (MCA) and brings
+                  expertise in SEO, web development, and digital strategy. With
+                  years of hands-on experience across technical SEO, WordPress
+                  development, content marketing, and paid advertising, Amit has
+                  helped dozens of businesses — from local startups to
+                  international brands — achieve measurable online growth.
                 </p>
                 <p>
-                  He built RankrSEO to be different — transparent,
-                  data-driven, and relentlessly focused on results. What started
-                  as a one-person consultancy has grown into a full-service
-                  digital agency serving clients across the globe.
+                  Before founding RankrSEO, Amit worked as a Senior SEO Analyst
+                  and Web Developer, where he managed high-budget campaigns,
+                  led technical SEO migrations, and built websites that
+                  consistently ranked in the top 3 on Google. His deep
+                  understanding of search algorithms, user experience, and
+                  conversion optimization gives RankrSEO clients a competitive
+                  edge.
+                </p>
+                <p>
+                  Amit founded RankrSEO with a simple belief: every business
+                  deserves a fair chance to be found online. He built the agency
+                  to be different — transparent, data-driven, and relentlessly
+                  focused on results. What started as a solo consultancy has
+                  grown into a full-service digital agency serving clients
+                  across the USA, UK, Canada, Australia, and India.
                 </p>
                 <p>
                   Today, Amit leads a team of passionate marketers, developers,
