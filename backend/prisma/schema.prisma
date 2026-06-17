@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("EDITOR")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([role])
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  website   String?
+  company   String?
+  service   String?
+  message   String?
+  budget    String?
+  source    String?
+  status    String   @default("NEW")
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model BlogPost {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  authorName  String?
+  authorImage String?
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags        String[]
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published])
+  @@index([categoryId])
+  @@index([createdAt])
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  description String?
+  createdAt   DateTime   @default(now())
+  blogPosts   BlogPost[]
+
+  @@index([slug])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  @@index([slug])
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  clientName String
+  company   String?
+  position  String?
+  content   String
+  rating    Int?
+  avatar    String?
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([featured])
+}
+
+model CaseStudy {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  clientName     String?
+  clientIndustry String?
+  problem        String?
+  strategy       String?
+  results        String?
+  metrics        Json?
+  coverImage     String?
+  screenshots    String[]
+  published      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published])
+}
+
+model Portfolio {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  category       String?
+  description    String?
+  imageUrl       String?
+  tags           String[]
+  clientName     String?
+  completionDate DateTime?
+  liveUrl        String?
+  featured       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([slug])
+  @@index([featured])
+  @@index([category])
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  service   String?
+  message   String?
+  budget    String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([read])
+  @@index([createdAt])
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([key])
+}
