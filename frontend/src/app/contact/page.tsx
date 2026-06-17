@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle } from "lucide-react"
-import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -241,16 +240,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* WhatsApp Floating Button */}
-      <Link
-        href="https://wa.me/919999999999"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 flex size-14 items-center justify-center rounded-full bg-accent text-white shadow-lg transition-all hover:bg-accent/90 hover:scale-110 active:scale-95"
-        aria-label="Chat on WhatsApp"
-      >
-        <MessageCircle className="size-7" />
-      </Link>
     </>
   )
 }

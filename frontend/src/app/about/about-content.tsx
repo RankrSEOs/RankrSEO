@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 import { Target, Eye, Heart, ArrowRight, Quote } from "lucide-react"
 import Link from "next/link"
 import ProcessSection from "@/components/home/ProcessSection"
-import CTASection from "@/components/home/CTASection"
 import { cn } from "@/lib/utils"
 
 const values = [

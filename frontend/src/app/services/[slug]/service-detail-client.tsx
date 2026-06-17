@@ -13,7 +13,6 @@ import {
   Check,
   ArrowRight,
   Star,
-  Shield,
   Zap,
   BarChart,
 } from "lucide-react"
