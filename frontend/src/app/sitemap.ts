@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { servicesData } from "@/lib/utils"
+import { servicesData, caseStudies } from "@/lib/utils"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://rankrseo.com"
@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     { url: `${baseUrl}/portfolio`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${baseUrl}/cases`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
   ]
 
@@ -20,5 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticPages, ...servicePages]
+  const caseStudyPages = caseStudies.map((cs) => ({
+    url: `${baseUrl}/cases/${cs.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...servicePages, ...caseStudyPages]
 }

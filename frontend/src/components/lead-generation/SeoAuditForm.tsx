@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Search, Loader2 } from "lucide-react"
+import { X, Search, Loader2, CheckCircle, ArrowRight } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -34,54 +34,55 @@ export function SeoAuditForm({ open, onClose }: { open: boolean; onClose: () => 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-      setSubmitted(true)
     } catch {
-      setSubmitted(true)
+      // fallback
     }
+    setSubmitted(true)
   }
 
   return (
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
           <motion.div
-            className="relative w-full max-w-md rounded-2xl bg-card p-6 shadow-2xl"
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
+            className="relative w-full max-w-md rounded-3xl border border-border/60 bg-card p-8 shadow-2xl"
+            initial={{ scale: 0.95, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
+              className="absolute right-5 top-5 flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
-              <X className="size-5" />
+              <X className="size-4" />
             </button>
 
             {submitted ? (
-              <div className="py-8 text-center">
-                <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-accent/10">
-                  <Search className="size-8 text-accent" />
+              <div className="py-6 text-center">
+                <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-accent/10">
+                  <CheckCircle className="size-8 text-accent" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Audit Request Received!</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-bold text-foreground">Audit Request Received!</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
                   We&apos;ll analyze your website and send your free SEO audit report within 24 hours.
                 </p>
               </div>
             ) : (
               <>
                 <div className="mb-6 text-center">
-                  <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-primary/10">
-                    <Search className="size-6 text-primary" />
+                  <div className="mx-auto mb-3 flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20">
+                    <Search className="size-7 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Free SEO Audit</h3>
+                  <h3 className="text-xl font-bold text-foreground">Free SEO Audit</h3>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Get a comprehensive analysis of your website&apos;s SEO performance.
+                    Get a comprehensive analysis of your website&apos;s SEO performance — worth $497.
                   </p>
                 </div>
 
@@ -90,7 +91,7 @@ export function SeoAuditForm({ open, onClose }: { open: boolean; onClose: () => 
                     <input
                       {...register("name")}
                       placeholder="Your Name"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                     />
                     {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name.message}</p>}
                   </div>
@@ -98,7 +99,7 @@ export function SeoAuditForm({ open, onClose }: { open: boolean; onClose: () => 
                     <input
                       {...register("email")}
                       placeholder="Email Address"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                     />
                     {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>}
                   </div>
@@ -106,7 +107,7 @@ export function SeoAuditForm({ open, onClose }: { open: boolean; onClose: () => 
                     <input
                       {...register("website")}
                       placeholder="Your Website URL"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                     />
                     {errors.website && <p className="mt-1 text-xs text-destructive">{errors.website.message}</p>}
                   </div>
@@ -114,19 +115,23 @@ export function SeoAuditForm({ open, onClose }: { open: boolean; onClose: () => 
                     <input
                       {...register("phone")}
                       placeholder="Phone Number"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm"
+                      type="tel"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                     />
                     {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone.message}</p>}
                   </div>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80 disabled:opacity-50"
+                    className="w-full rounded-xl bg-gradient-to-r from-primary to-accent px-4 py-3.5 text-sm font-semibold text-white transition-all hover:opacity-90 hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
-                      <Loader2 className="mx-auto size-4 animate-spin" />
+                      <Loader2 className="size-4 animate-spin" />
                     ) : (
-                      "Get My Free Audit"
+                      <>
+                        Get My Free Audit
+                        <ArrowRight className="size-4" />
+                      </>
                     )}
                   </button>
                 </form>

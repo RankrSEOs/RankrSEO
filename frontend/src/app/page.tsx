@@ -1,9 +1,10 @@
 import HeroSection from "@/components/home/HeroSection"
+import SocialProofSection from "@/components/home/SocialProofSection"
 import ServicesSection from "@/components/home/ServicesSection"
-import WhyChooseUs from "@/components/home/WhyChooseUs"
+import CaseStudiesSection from "@/components/home/CaseStudiesSection"
+import FounderSection from "@/components/home/FounderSection"
 import ProcessSection from "@/components/home/ProcessSection"
 import TestimonialsSection from "@/components/home/TestimonialsSection"
-import IndustriesSection from "@/components/home/IndustriesSection"
 import FAQSection from "@/components/home/FAQSection"
 import CTASection from "@/components/home/CTASection"
 
@@ -11,11 +12,12 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <SocialProofSection />
       <ServicesSection />
-      <WhyChooseUs />
+      <CaseStudiesSection />
+      <FounderSection />
       <ProcessSection />
       <TestimonialsSection />
-      <IndustriesSection />
       <FAQSection />
       <CTASection />
     </>
