@@ -1,47 +1,61 @@
-import type { Metadata } from "next"
+"use client"
+
+import { useState, useEffect } from "react"
+import { adminApi } from "@/lib/admin-api"
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-import { Users, FileText, Star, TrendingUp } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Dashboard",
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
-
-const stats = [
-  { label: "Total Leads", value: "1,284", change: "+12.5%", icon: Users },
-  { label: "Blog Posts", value: "48", change: "+3", icon: FileText },
-  {
-    label: "Testimonials",
-    value: "32",
-    change: "+5",
-    icon: Star,
-  },
-  {
-    label: "Conversion Rate",
-    value: "24.8%",
-    change: "+2.1%",
-    icon: TrendingUp,
-  },
-]
-
-const recentLeads = [
-  { name: "Sarah Johnson", email: "sarah@example.com", service: "SEO", status: "New", date: "2026-06-15" },
-  { name: "Michael Chen", email: "michael@example.com", service: "Web Design", status: "Contacted", date: "2026-06-14" },
-  { name: "Emily Rodriguez", email: "emily@example.com", service: "PPC", status: "Qualified", date: "2026-06-13" },
-  { name: "David Kim", email: "david@example.com", service: "Local SEO", status: "New", date: "2026-06-12" },
-  { name: "Lisa Thompson", email: "lisa@example.com", service: "Content Marketing", status: "Won", date: "2026-06-11" },
-  { name: "James Wilson", email: "james@example.com", service: "Technical SEO", status: "Contacted", date: "2026-06-10" },
-]
+import { Users, FileText, Star, TrendingUp, Mail, Loader2 } from "lucide-react"
 
 export default function AdminDashboard() {
+  const [stats, setStats] = useState({
+    leads: 0,
+    messages: 0,
+    blogPosts: 0,
+  })
+  const [loading, setLoading] = useState(true)
+  const [recentLeads, setRecentLeads] = useState<Array<{
+    id: string; name: string; email: string; service: string | null;
+    status: string; createdAt: string
+  }>>([])
+
+  useEffect(() => {
+    Promise.all([
+      adminApi.getLeads(),
+      adminApi.getMessages(),
+      adminApi.getBlogPosts(),
+    ]).then(([leads, messages, blog]) => {
+      setStats({
+        leads: leads.length,
+        messages: messages.length,
+        blogPosts: blog.posts.length,
+      })
+      setRecentLeads(leads.slice(0, 6).map(l => ({
+        id: l.id, name: l.name, email: l.email,
+        service: l.service, status: l.status,
+        createdAt: l.createdAt
+      })))
+    }).catch(console.error).finally(() => setLoading(false))
+  }, [])
+
+  const statCards = [
+    { label: "Total Leads", value: stats.leads.toString(), icon: Users },
+    { label: "Contact Messages", value: stats.messages.toString(), icon: Mail },
+    { label: "Blog Posts", value: stats.blogPosts.toString(), icon: FileText },
+    { label: "Conversion Rate", value: "—", icon: TrendingUp },
+  ]
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="size-6 animate-spin text-primary" />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -52,7 +66,7 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
+        {statCards.map((stat) => {
           const Icon = stat.icon
           return (
             <Card key={stat.label}>
@@ -64,19 +78,20 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-green-600">{stat.change} from last month</p>
               </CardContent>
             </Card>
           )
         })}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Leads</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Leads</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {recentLeads.length === 0 ? (
+            <p className="py-4 text-center text-sm text-muted-foreground">No leads yet.</p>
+          ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -90,57 +105,41 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody>
                   {recentLeads.map((lead) => (
-                    <tr key={lead.email} className="border-b last:border-0">
+                    <tr key={lead.id} className="border-b last:border-0">
                       <td className="py-3 font-medium">{lead.name}</td>
                       <td className="py-3 text-muted-foreground">{lead.email}</td>
-                      <td className="py-3 text-muted-foreground">{lead.service}</td>
+                      <td className="py-3 text-muted-foreground">{lead.service || "—"}</td>
                       <td className="py-3">
                         <span
                           className={
                             "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium " +
-                            (lead.status === "New"
+                            (lead.status === "NEW"
                               ? "bg-blue-100 text-blue-700"
-                              : lead.status === "Contacted"
+                              : lead.status === "CONTACTED"
                               ? "bg-yellow-100 text-yellow-700"
-                              : lead.status === "Qualified"
+                              : lead.status === "QUALIFIED"
                               ? "bg-green-100 text-green-700"
-                              : "bg-emerald-100 text-emerald-700")
+                              : lead.status === "WON"
+                              ? "bg-emerald-100 text-emerald-700"
+                              : lead.status === "LOST"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-gray-100 text-gray-700")
                           }
                         >
                           {lead.status}
                         </span>
                       </td>
-                      <td className="py-3 text-muted-foreground">{lead.date}</td>
+                      <td className="py-3 text-muted-foreground">
+                        {new Date(lead.createdAt).toLocaleDateString()}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex h-48 items-end justify-between gap-2">
-              {["Jan", "Feb", "Mar", "Apr", "May", "Jun"].map((month, i) => (
-                <div key={month} className="flex flex-1 flex-col items-center gap-2">
-                  <div
-                    className="w-full rounded-md bg-primary/20"
-                    style={{ height: `${40 + Math.random() * 60}%` }}
-                  />
-                  <span className="text-xs text-muted-foreground">{month}</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              Chart placeholder — GA4 integration coming soon
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }

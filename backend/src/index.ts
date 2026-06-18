@@ -11,6 +11,9 @@ import authRoutes from './routes/auth';
 import leadsRoutes from './routes/leads';
 import contactRoutes from './routes/contact';
 import blogRoutes from './routes/blog';
+import casesRoutes from './routes/cases';
+import testimonialsRoutes from './routes/testimonials';
+import portfolioRoutes from './routes/portfolio';
 
 const app = express();
 
@@ -58,6 +61,9 @@ app.use('/api/leads', leadsRoutes);
 app.use('/api/audit', leadsRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/cases', casesRoutes);
+app.use('/api/testimonials', testimonialsRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

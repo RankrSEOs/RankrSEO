@@ -52,13 +52,20 @@ export default function ContactPage() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log("Contact form submitted:", data)
-    setIsSubmitting(false)
-    setIsSuccess(true)
-    reset()
-    setTimeout(() => setIsSuccess(false), 5000)
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      setIsSuccess(true)
+      reset()
+    } catch {
+      // fallback
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setIsSuccess(false), 5000)
+    }
   }
 
   return (

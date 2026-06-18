@@ -74,6 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           { name: "Contact", url: "/contact" },
         ]}
         />
+        <meta name="google-site-verification" content="INDbNb8JZo3ooRBRPcOyHj0ZJ2Fc70OVM2Cwj3b8NyU" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
