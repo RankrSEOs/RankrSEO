@@ -223,4 +223,16 @@ export const adminApi = {
   getCategories() {
     return request<Array<{ id: string; name: string; slug: string; description: string | null }>>("/api/categories")
   },
+
+  // Settings
+  getSettings() {
+    return request<Record<string, unknown>>("/api/settings")
+  },
+
+  updateSettings(data: Record<string, unknown>) {
+    return request<Record<string, unknown>>("/api/settings", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    })
+  },
 }

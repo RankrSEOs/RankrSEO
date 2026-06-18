@@ -15,6 +15,7 @@ import casesRoutes from './routes/cases';
 import testimonialsRoutes from './routes/testimonials';
 import portfolioRoutes from './routes/portfolio';
 import categoriesRoutes from './routes/categories';
+import settingsRoutes from './routes/settings';
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use('/api/cases', casesRoutes);
 app.use('/api/testimonials', testimonialsRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/categories', categoriesRoutes);
+app.use('/api/settings', settingsRoutes);
 
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
