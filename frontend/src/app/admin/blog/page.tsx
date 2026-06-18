@@ -4,12 +4,15 @@ import { useState, useEffect } from "react"
 import { adminApi } from "@/lib/admin-api"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { BlogPostEditor } from "@/components/admin/BlogPostEditor"
 import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from "lucide-react"
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [editorOpen, setEditorOpen] = useState(false)
+  const [editingPost, setEditingPost] = useState<Record<string, unknown> | null>(null)
 
   const fetchPosts = () => {
     setLoading(true)
@@ -40,6 +43,11 @@ export default function BlogPage() {
     finally { setActionLoading(null) }
   }
 
+  const openEditor = (post?: Record<string, unknown>) => {
+    setEditingPost(post || null)
+    setEditorOpen(true)
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -47,7 +55,7 @@ export default function BlogPage() {
           <h1 className="text-2xl font-bold tracking-tight">Blog Posts</h1>
           <p className="text-sm text-muted-foreground">Manage your blog content.</p>
         </div>
-        <Button disabled>
+        <Button onClick={() => openEditor()}>
           <Plus className="size-4" />
           New Post
         </Button>
@@ -75,7 +83,7 @@ export default function BlogPage() {
                 <tbody>
                   {posts.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-muted-foreground">No posts yet.</td>
+                      <td colSpan={5} className="py-8 text-center text-muted-foreground">No posts yet. Create your first post!</td>
                     </tr>
                   ) : (
                     posts.map((post) => (
@@ -104,6 +112,13 @@ export default function BlogPage() {
                               {post.published ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                             </button>
                             <button
+                              onClick={() => openEditor(post)}
+                              className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                              title="Edit"
+                            >
+                              <Pencil className="size-4" />
+                            </button>
+                            <button
                               onClick={() => handleDelete(post.id as string)}
                               disabled={actionLoading === post.id}
                               className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive disabled:opacity-40"
@@ -121,6 +136,14 @@ export default function BlogPage() {
           )}
         </CardContent>
       </Card>
+
+      {editorOpen && (
+        <BlogPostEditor
+          post={editingPost}
+          onClose={() => { setEditorOpen(false); setEditingPost(null) }}
+          onSaved={fetchPosts}
+        />
+      )}
     </div>
   )
 }

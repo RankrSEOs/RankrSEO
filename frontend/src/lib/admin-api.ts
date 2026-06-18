@@ -218,4 +218,9 @@ export const adminApi = {
   deletePortfolioItem(id: string) {
     return request<void>(`/api/portfolio/${id}`, { method: "DELETE" })
   },
+
+  // Categories
+  getCategories() {
+    return request<Array<{ id: string; name: string; slug: string; description: string | null }>>("/api/categories")
+  },
 }
