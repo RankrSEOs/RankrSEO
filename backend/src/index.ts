@@ -55,6 +55,7 @@ app.use('/api', limiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/leads', leadsRoutes);
+app.use('/api/audit', leadsRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/blog', blogRoutes);
 
