@@ -1,0 +1,22 @@
+name: Keep Render Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Ping Health Endpoint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Health check
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://rankrseo.onrender.com/health)
+          echo "Health endpoint returned: $HTTP_CODE"
+          [ "$HTTP_CODE" = "200" ] && echo "OK" || exit 1
+      - name: API root check
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://rankrseo.onrender.com/)
+          echo "API root returned: $HTTP_CODE"
+          [ "$HTTP_CODE" = "200" ] && echo "OK" || exit 1
