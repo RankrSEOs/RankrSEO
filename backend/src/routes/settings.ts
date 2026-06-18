@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
@@ -25,7 +25,7 @@ const updateSchema = z.record(z.string(), z.any());
 
 router.put('/', authenticate, validate(updateSchema), async (req: Request, res: Response) => {
   try {
-    const entries = req.body as Record<string, unknown>;
+    const entries = req.body as Record<string, Prisma.InputJsonValue>;
     const results: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(entries)) {
       const setting = await prisma.setting.upsert({
