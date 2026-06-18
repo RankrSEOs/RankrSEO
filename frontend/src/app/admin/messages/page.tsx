@@ -56,9 +56,9 @@ export default function MessagesPage() {
                       </span>
                     </div>
                     <p className="truncate text-sm text-muted-foreground">{msg.email as string}</p>
-                    {msg.message && (
+                    {msg.message ? (
                       <p className="mt-1 line-clamp-2 text-sm text-muted-foreground/80">{msg.message as string}</p>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               ))}

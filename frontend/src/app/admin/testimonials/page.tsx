@@ -55,13 +55,13 @@ export default function TestimonialsPage() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {t.rating && (
+                      {t.rating ? (
                         <div className="flex items-center gap-0.5">
                           {Array.from({ length: t.rating as number }).map((_, i) => (
                             <Star key={i} className="size-3.5 fill-yellow-400 text-yellow-400" />
                           ))}
                         </div>
-                      )}
+                      ) : null}
                       <button
                         onClick={() => handleDelete(t.id as string)}
                         className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"

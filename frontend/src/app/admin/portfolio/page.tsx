@@ -49,21 +49,21 @@ export default function PortfolioPage() {
               {items.map((item) => (
                 <div key={item.id as string} className="rounded-lg border p-4">
                   <h3 className="font-medium truncate">{item.title as string}</h3>
-                  {item.category && (
+                  {item.category ? (
                     <span className="mt-1 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
                       {item.category as string}
                     </span>
-                  )}
+                  ) : null}
                   <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{item.description as string || "—"}</p>
                   <div className="mt-3 flex items-center gap-2">
-                    {item.slug && (
+                    {item.slug ? (
                       <Link
-                        href={`/cases/${item.slug}`}
+                        href={`/cases/${item.slug as string}`}
                         className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         <Eye className="size-4" />
                       </Link>
-                    )}
+                    ) : null}
                     <button
                       onClick={() => handleDelete(item.id as string)}
                       className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"
