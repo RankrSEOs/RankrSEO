@@ -19,31 +19,28 @@
 | GET    | `/api/health`  | No       | Legacy health check              |
 | POST   | `/api/auth/login` | No    | Admin login                      |
 | GET    | `/api/blog`    | No       | Public blog posts                |
-| POST   | `/api/leads`   | No       | Submit lead (SEO audit)          |
+| POST   | `/api/leads`   | No       | Submit lead (admin)              |
+| POST   | `/api/audit`   | No       | Submit lead (SEO audit form)     |
 | POST   | `/api/contact` | No       | Submit contact form              |
 
-## Recommended Uptime Monitoring
+## Uptime Monitoring
 
-### Option 1 — UptimeRobot (Free)
-1. Sign up at https://uptimerobot.com
-2. Add a new monitor:
-   - **Type:** HTTP(s)
-   - **URL:** https://rankrseo.onrender.com/health
-   - **Interval:** 5 minutes
-   - **Timeout:** 30 seconds
-   - **Alert contacts:** your email
-3. UptimeRobot pings every 5 min, keeping the instance awake.
+### Primary — GitHub Actions Keep-Alive (Already Configured)
+A GitHub Actions workflow (`.github/workflows/keep-alive.yml`) pings both `/health` and `/` every 10 minutes for free.
+- ✅ No external account needed
+- ✅ Alerts via GitHub email when workflow fails
+- ✅ Keeps Render instance warm (within the 15min idle window)
 
-### Option 2 — Better Stack (Free)
-1. Sign up at https://betterstack.com
-2. Create a heartbeat monitor for `/health`
-3. Set check interval to 5 minutes
-4. Configure Slack/Email alerts on downtime
+### Backup — External Service (Optional)
+For redundant monitoring and SMS/chat alerts:
 
-### Option 3 — cron-job.org (Free)
-1. Go to https://cron-job.org
-2. Create a cron job: `GET https://rankrseo.onrender.com/health` every 5 minutes
-3. This is the simplest option for a single endpoint.
+| Service       | Free Tier                          | URL                          |
+|---------------|------------------------------------|------------------------------|
+| UptimeRobot   | 50 monitors @ 5min                | https://uptimerobot.com      |
+| Better Stack  | 3 heartbeats + Slack/Email alerts | https://betterstack.com      |
+| cron-job.org  | Unlimited cron jobs @ 5min        | https://cron-job.org         |
+
+Add `https://rankrseo.onrender.com/health` as a monitor URL.
 
 ## What Happens Without Monitoring
 
@@ -71,8 +68,8 @@ The first request after inactivity triggers a **cold start** that takes 5–30 s
 
 ### Cold start is too slow
 1. Upgrade to Render Starter plan ($7/mo) — no cold starts
-2. Or use a monitoring service (above) to keep the instance warm
-3. /health endpoint is designed to respond in under 100ms even on cold start
+2. The GitHub Actions keep-alive workflow runs every 10 min to stay within the 15min idle window
+3. /health endpoint responds in under 100ms even on cold start
 
 ## Local Development
 
