@@ -14,10 +14,36 @@ import blogRoutes from './routes/blog';
 
 const app = express();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000' }));
-app.use(morgan('dev'));
+
+app.use(isProduction ? morgan('combined') : morgan('dev'));
+
 app.use(express.json());
+
+app.get('/', (_req: Request, res: Response) => {
+  res.json({
+    service: 'RankrSEO Backend',
+    status: 'running',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      api: '/api',
+      docs: 'https://rankrseo.com',
+    },
+  });
+});
+
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'RankrSEO Backend',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -41,13 +67,15 @@ app.use((_req: Request, res: Response) => {
 });
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  console.error(err.stack);
+  if (!isProduction) {
+    console.error(err.stack);
+  }
   res.status(500).json({ error: 'Internal server error' });
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`RankrSEO Backend running on port ${PORT} [${isProduction ? 'production' : 'development'}]`);
 });
 
 export default app;
