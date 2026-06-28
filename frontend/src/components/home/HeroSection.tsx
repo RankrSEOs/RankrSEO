@@ -74,7 +74,7 @@ export default function HeroSection() {
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
               </button>
               <Link
-                href="/case-studies"
+                href="/cases"
                 className={cn(
                   "group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white",
                   "transition-all hover:border-white/40 hover:bg-white/10 active:translate-y-px backdrop-blur-sm",

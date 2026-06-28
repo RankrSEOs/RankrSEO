@@ -166,6 +166,8 @@ const hardcodedPortfolio: PortfolioItem[] = [
 
 const categories = ["All", "SEO", "Web Design", "Local SEO", "PPC", "Content Marketing"]
 
+const caseStudySlugs = new Set(["techflow-seo", "greenleaf-web", "brickhouse-local"])
+
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState("All")
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
@@ -337,13 +339,15 @@ export default function PortfolioPage() {
                 </div>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href={`/cases/${selectedItem.id}`}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
-                  >
-                    View Full Case Study
-                    <ArrowUpRight className="size-4" />
-                  </Link>
+                  {caseStudySlugs.has(selectedItem.id) && (
+                    <Link
+                      href={`/cases/${selectedItem.id}`}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+                    >
+                      View Full Case Study
+                      <ArrowUpRight className="size-4" />
+                    </Link>
+                  )}
                   <Dialog.Close className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted">
                     Close
                   </Dialog.Close>

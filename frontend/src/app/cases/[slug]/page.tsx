@@ -199,11 +199,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         </div>
       </section>
 
-      {/* Screenshot Placeholder */}
+      {/* Case Study Banner */}
       <section className="bg-muted/30 py-12">
         <div className="container px-4">
-          <div className={cn("mx-auto flex h-64 max-w-4xl items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg sm:h-80", cs.gradient)}>
-            <span className="text-lg font-medium text-white/60">Screenshot Placeholder</span>
+          <div className={cn("mx-auto flex h-64 max-w-4xl flex-col items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg sm:h-80", cs.gradient)}>
+            <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">{cs.category} &bull; {cs.industry}</span>
+            <h2 className="mt-4 px-6 text-center text-2xl font-bold text-white sm:text-3xl">{cs.title}</h2>
+            <p className="mt-2 text-sm text-white/70">Client: {cs.client}</p>
           </div>
         </div>
       </section>

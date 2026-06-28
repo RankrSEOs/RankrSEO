@@ -5,9 +5,10 @@ import { motion } from "framer-motion"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import Link from "next/link"
 import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn, siteConfig } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -223,23 +224,39 @@ export default function ContactPage() {
                 })}
               </div>
 
-              {/* Calendly Embed Placeholder */}
+              {/* Book a Free Consultation */}
               <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
                 <h3 className="font-semibold text-foreground">Book a Free Consultation</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Schedule a 30-minute strategy call with our team.
                 </p>
-                <div className="mt-4 flex h-48 items-center justify-center rounded-lg bg-muted">
-                  <span className="text-sm text-muted-foreground">Calendly Embed Placeholder</span>
+                <div className="mt-4 flex h-48 flex-col items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-primary to-secondary">
+                  <p className="px-4 text-center text-sm text-white/90">
+                    Call us at <strong className="text-white">{siteConfig.phone}</strong> or email{" "}
+                    <strong className="text-white">{siteConfig.email}</strong>
+                  </p>
+                  <Link
+                    href={`tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`}
+                    className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-white/90"
+                  >
+                    <Phone className="size-4" />
+                    Call Now
+                  </Link>
                 </div>
               </div>
 
-              {/* Map Placeholder */}
+              {/* Our Location */}
               <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
                 <h3 className="font-semibold text-foreground">Our Location</h3>
                 <p className="mt-1 text-sm text-muted-foreground">Delhi, India</p>
-                <div className="mt-4 flex h-48 items-center justify-center rounded-lg bg-muted">
-                  <span className="text-sm text-muted-foreground">Google Map Placeholder</span>
+                <div className="mt-4 flex h-48 flex-col items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-secondary to-primary">
+                  <MapPin className="size-8 text-white/60" />
+                  <p className="px-4 text-center text-sm text-white/90">
+                    {siteConfig.address}<br />
+                    <a href={`https://maps.google.com/?q=${encodeURIComponent(siteConfig.address)}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                      View on Google Maps
+                    </a>
+                  </p>
                 </div>
               </div>
             </motion.div>

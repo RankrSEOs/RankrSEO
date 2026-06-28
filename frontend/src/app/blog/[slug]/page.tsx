@@ -126,9 +126,9 @@ Complex navigation confuses users. A clear, intuitive information architecture g
 ]
 
 const relatedPosts = [
-  { slug: "ppc-budget-optimization", title: "Maximize ROI: PPC Budget Optimization Strategies", gradient: "from-orange-600 to-red-500" },
-  { slug: "content-marketing-strategy", title: "Building a Content Marketing Strategy That Works", gradient: "from-cyan-600 to-blue-500" },
-  { slug: "technical-seo-checklist", title: "Technical SEO Checklist: 20 Essential Checks", gradient: "from-slate-600 to-gray-500" },
+  { slug: "seo-trends-2026", title: "SEO Trends 2026: What Every Business Must Know", gradient: "from-blue-600 to-cyan-500" },
+  { slug: "local-seo-guide", title: "The Ultimate Guide to Local SEO in 2026", gradient: "from-amber-600 to-orange-500" },
+  { slug: "web-design-conversion", title: "Web Design Trends That Drive Conversions in 2026", gradient: "from-emerald-600 to-teal-500" },
 ]
 
 export async function generateStaticParams() {
@@ -238,11 +238,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
-      {/* Featured Image Placeholder */}
+      {/* Featured Image */}
       <div className="bg-background pb-8">
         <div className="container px-4">
-          <div className={cn("mx-auto flex h-56 max-w-4xl items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg sm:h-72", post.gradient)}>
-            <span className="text-lg font-medium text-white/60">Featured Image</span>
+          <div className={cn("mx-auto flex h-56 max-w-4xl flex-col items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg sm:h-72", post.gradient)}>
+            <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">{post.category}</span>
+            <h1 className="mt-4 px-6 text-center text-2xl font-bold text-white sm:text-3xl">{post.title}</h1>
           </div>
         </div>
       </div>
