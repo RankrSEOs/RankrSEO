@@ -15,7 +15,7 @@ const createSchema = z.object({
   imageUrl: z.string().optional(),
   tags: z.array(z.string()).optional(),
   clientName: z.string().optional(),
-  completionDate: z.string().datetime().optional(),
+  completionDate: z.string().datetime().transform(v => new Date(v)).optional(),
   liveUrl: z.string().optional(),
   featured: z.boolean().optional(),
 });

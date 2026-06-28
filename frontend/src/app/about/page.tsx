@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     title: "About RankrSEO | Digital Marketing Agency",
     description: "Learn about our mission, vision, and the team behind RankrSEO.",
     url: "https://rankrseo.com/about",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 }
 

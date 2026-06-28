@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Mail, Phone, MapPin, MessageCircle, ArrowUpRight } from "lucide-react"
-import { servicesData, socialLinks, siteConfig, cn } from "@/lib/utils"
+import { servicesData, socialLinks, siteConfig } from "@/lib/utils"
 
 const quickLinks = [
   { label: "About Us", href: "/about" },
@@ -33,13 +33,13 @@ export default function Footer() {
               {siteConfig.description}
             </p>
             <div className="mt-6 space-y-3">
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group">
+              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <Mail className="size-4" />
                 </div>
                 {siteConfig.email}
               </a>
-              <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group">
+              <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <Phone className="size-4" />
                 </div>
@@ -51,7 +51,7 @@ export default function Footer() {
                 </div>
                 {siteConfig.address}
               </div>
-              <a href={`https://wa.me/${siteConfig.wa}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group">
+              <a href={`https://wa.me/${siteConfig.wa}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-colors">
                   <MessageCircle className="size-4" />
                 </div>
@@ -65,7 +65,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground flex items-center gap-1.5 group">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground flex items-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
                     {link.label}
                     <ArrowUpRight className="size-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
                   </Link>
@@ -79,7 +79,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5">
               {servicesData.slice(0, 6).map((service) => (
                 <li key={service.id}>
-                  <Link href={service.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  <Link href={service.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
                     {service.title}
                   </Link>
                 </li>
@@ -96,7 +96,7 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex size-10 items-center justify-center rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary/10 hover:text-primary hover:-translate-y-0.5"
+                  className="flex size-10 items-center justify-center rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary/10 hover:text-primary hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                   aria-label={link.label}
                 >
                   <SocialIcon icon={link.icon} />

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowRight, BarChart3, TrendingUp, Star, Award, Play } from "lucide-react"
 import Link from "next/link"
-import { cn, siteConfig } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { SeoAuditForm } from "@/components/lead-generation/SeoAuditForm"
 import Illustration from "@/components/ui/Illustration"
 

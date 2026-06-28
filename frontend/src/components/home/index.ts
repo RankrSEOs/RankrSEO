@@ -1,8 +1,6 @@
 export { default as HeroSection } from "./HeroSection"
 export { default as ServicesSection } from "./ServicesSection"
-export { default as WhyChooseUs } from "./WhyChooseUs"
 export { default as ProcessSection } from "./ProcessSection"
 export { default as TestimonialsSection } from "./TestimonialsSection"
-export { default as IndustriesSection } from "./IndustriesSection"
 export { default as FAQSection } from "./FAQSection"
 export { default as CTASection } from "./CTASection"

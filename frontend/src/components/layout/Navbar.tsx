@@ -5,7 +5,7 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, ChevronDown, Sun, Moon, Search, BarChart3 } from "lucide-react"
 import { useTheme } from "@/components/layout/ThemeProvider"
-import { servicesData, siteConfig } from "@/lib/utils"
+import { servicesData } from "@/lib/utils"
 import { cn } from "@/lib/utils"
 import { SeoAuditForm } from "@/components/lead-generation/SeoAuditForm"
 
@@ -74,7 +74,7 @@ export default function Navbar() {
                     onMouseLeave={() => setServicesOpen(false)}
                   >
                     <button
-                      className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50"
+                      className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                       aria-expanded={servicesOpen}
                       aria-haspopup="true"
                     >
@@ -120,7 +120,7 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   {link.label}
                 </Link>
@@ -131,7 +131,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAuditOpen(true)}
-              className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:translate-y-px"
+              className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <Search className="size-4" />
               Free SEO Audit
@@ -139,7 +139,7 @@ export default function Navbar() {
 
             <button
               onClick={toggleTheme}
-              className="flex size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted hover:text-foreground"
+              className="flex size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
@@ -147,7 +147,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileOpen(true)}
-              className="flex lg:hidden size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted"
+              className="flex lg:hidden size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               aria-label="Open menu"
             >
               <Menu className="size-5" />
@@ -177,7 +177,7 @@ export default function Navbar() {
                   <img src="/logo.svg" alt="RankrSEO" className="h-8 w-auto" />
                   <button
                     onClick={() => setMobileOpen(false)}
-                    className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-muted"
+                    className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                     aria-label="Close menu"
                   >
                     <X className="size-5" />

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { TrendingUp, Users, Star, ArrowRight, BarChart3 } from "lucide-react"
+import { TrendingUp, Users, Star, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 

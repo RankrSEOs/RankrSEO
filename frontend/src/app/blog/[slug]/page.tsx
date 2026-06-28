@@ -226,7 +226,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="container px-4">
           <div className={cn("mx-auto flex h-56 max-w-4xl flex-col items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg sm:h-72", post.gradient)}>
             <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">{post.category}</span>
-            <h1 className="mt-4 px-6 text-center text-2xl font-bold text-white sm:text-3xl">{post.title}</h1>
+            <div className="mt-4 px-6 text-center text-2xl font-bold text-white sm:text-3xl">{post.title}</div>
           </div>
         </div>
       </div>

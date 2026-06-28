@@ -50,6 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@rankrseo",
+    creator: "@rankrseo",
     title: "RankrSEO — SEO Agency & Digital Marketing Services",
     description: "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar.",
     images: ["/og-image.png"],

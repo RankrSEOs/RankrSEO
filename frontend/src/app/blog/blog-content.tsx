@@ -76,7 +76,7 @@ export default function BlogContent({ initialPosts }: { initialPosts: BloggerPos
                 key={cat}
                 onClick={() => { setActiveCategory(cat); setCurrentPage(1) }}
                 className={cn(
-                  "rounded-full px-4 py-1.5 text-sm font-medium transition-all",
+                  "rounded-full px-4 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                   activeCategory === cat ? "bg-primary text-primary-foreground shadow-md" : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground",
                 )}
               >
@@ -133,18 +133,18 @@ export default function BlogContent({ initialPosts }: { initialPosts: BloggerPos
           {totalPages > 1 && (
             <div className="mt-12 flex items-center justify-center gap-2">
               <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}
-                className="flex size-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40">
+                className="flex size-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 <ChevronLeft className="size-4" />
               </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button key={page} onClick={() => handlePageChange(page)}
-                  className={cn("flex size-9 items-center justify-center rounded-lg text-sm font-medium transition-colors",
+                  className={cn("flex size-9 items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                     page === currentPage ? "bg-primary text-primary-foreground shadow-sm" : "border border-border bg-card text-foreground hover:bg-muted")}>
                   {page}
                 </button>
               ))}
               <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}
-                className="flex size-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40">
+                className="flex size-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 <ChevronRight className="size-4" />
               </button>
             </div>
