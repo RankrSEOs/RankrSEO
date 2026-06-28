@@ -4,9 +4,9 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowRight, BarChart3, TrendingUp, Star, Award, Play } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { siteConfig } from "@/lib/utils"
+import { cn, siteConfig } from "@/lib/utils"
 import { SeoAuditForm } from "@/components/lead-generation/SeoAuditForm"
+import Illustration from "@/components/ui/Illustration"
 
 const stats = [
   { icon: BarChart3, value: "$10M+", sub: "Revenue Generated" },
@@ -38,6 +38,13 @@ export default function HeroSection() {
 
         <motion.div className="absolute top-1/4 -left-32 size-96 rounded-full bg-primary/20 blur-[120px] animate-pulse-glow" />
         <motion.div className="absolute bottom-1/4 -right-32 size-96 rounded-full bg-accent/15 blur-[120px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
+        <motion.div
+          className="absolute -right-20 top-20 w-80 opacity-10 lg:opacity-20 hidden lg:block"
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Illustration type="seo-dashboard" className="text-white" />
+        </motion.div>
 
         <div className="container relative z-10 px-4 pt-24 pb-16">
           <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mx-auto max-w-5xl">

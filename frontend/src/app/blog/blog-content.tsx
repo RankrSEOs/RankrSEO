@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react"
 import { motion } from "framer-motion"
 import { Search, ChevronLeft, ChevronRight, Calendar, User, ArrowRight, ExternalLink, Loader2 } from "lucide-react"
-
 import { cn } from "@/lib/utils"
+import BlogFeaturedImage from "@/components/ui/BlogFeaturedImage"
 
 interface BloggerPost {
   id: string; title: string; url: string; published: string
@@ -100,13 +100,11 @@ export default function BlogContent({ initialPosts }: { initialPosts: BloggerPos
               >
                 <a href={post.url} target="_blank" rel="noopener noreferrer" className="group block">
                   <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary/5 h-full flex flex-col">
-                    <div className="flex h-48 items-end bg-gradient-to-br from-primary to-secondary p-4 sm:h-44">
-                      <div className="flex flex-wrap gap-1.5">
-                        {getDisplayCategories(post.categories).slice(0, 2).map((cat) => (
-                          <span key={cat} className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">{cat}</span>
-                        ))}
-                      </div>
-                    </div>
+                    <BlogFeaturedImage
+                      title={post.title}
+                      category={post.categories[0]}
+                      className="h-48 sm:h-44 rounded-none rounded-t-xl"
+                    />
                     <div className="flex flex-col flex-1 p-5">
                       <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1"><Calendar className="size-3" />{formatDate(post.published)}</span>

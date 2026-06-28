@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RankrSEO - Digital Marketing Agency",
+    name: "RankrSEO — SEO Agency & Digital Marketing Services",
     short_name: "RankrSEO",
-    description: "Data-driven digital marketing agency specializing in SEO, Web Design, and PPC.",
+    description: "Premium SEO agency and digital marketing services. Data-driven strategies for business growth.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
