@@ -1,8 +1,8 @@
 # RankrSEO
 
-A production-ready digital marketing agency website built with Next.js 16, TypeScript, Tailwind CSS v4, and Express.js.
+A premium SEO agency website built with Next.js 16, TypeScript, Tailwind CSS v4, and Express.js — serving the USA, UK, Canada, Australia, and India.
 
-> **Founder:** Amit Kumar | **Location:** Delhi, India | **Target:** USA, UK, Canada, Australia, India
+> **Founder:** Amit Kumar | **Location:** Delhi, India | **Email:** rankrseo@gmail.com | **Phone:** +91 9953732860
 
 ## Tech Stack
 
@@ -14,12 +14,10 @@ A production-ready digital marketing agency website built with Next.js 16, TypeS
 | **Backend** | Node.js, Express.js |
 | **Database** | PostgreSQL (via Neon) |
 | **ORM** | Prisma |
-| **Auth** | NextAuth v5 / JWT |
-| **CMS** | Sanity CMS |
+| **Auth** | JWT (bcrypt + jsonwebtoken) |
+| **Blog Source** | Blogger RSS Feed |
 | **Forms** | React Hook Form + Zod |
 | **Deployment** | Vercel (frontend) + Render (backend) |
-
----
 
 ## Project Structure
 
@@ -27,240 +25,92 @@ A production-ready digital marketing agency website built with Next.js 16, TypeS
 RankrSEO/
 ├── frontend/                    # Next.js 16 App Router
 │   └── src/
-│       ├── app/                 # Routes & pages
-│       │   ├── page.tsx         # Homepage (10 sections)
-│       │   ├── about/           # Founder, mission, team
-│       │   ├── services/        # 8 service pages + overview
-│       │   ├── portfolio/       # Filterable portfolio grid
-│       │   ├── blog/            # Blog listing + detail
-│       │   ├── cases/           # Case studies
-│       │   ├── contact/         # Contact form + map
-│       │   ├── admin/           # Secure dashboard
-│       │   ├── sitemap.ts       # Dynamic sitemap
-│       │   └── robots.ts        # Robots.txt
+│       ├── app/
+│       │   ├── page.tsx         # Homepage (10 premium sections)
+│       │   ├── about/           # Founder story, values, team
+│       │   ├── services/        # 8 service pages + detail
+│       │   ├── portfolio/       # Hero carousel + filterable grid + detail modal
+│       │   ├── blog/            # 25 SSG blog posts from Blogger feed
+│       │   ├── cases/           # Case studies + detail
+│       │   ├── contact/         # Contact form + info cards
+│       │   ├── admin/           # Full admin dashboard (9 pages)
+│       │   ├── sitemap.ts       # Auto-generated sitemap
+│       │   ├── robots.ts        # Robots.txt
+│       │   ├── globals.css      # Glass utilities, gradient-border, animations
+│       │   ├── loading.tsx      # Root loading state
+│       │   ├── error.tsx        # Root error boundary
+│       │   └── not-found.tsx    # Custom 404 page
 │       ├── components/
-│       │   ├── ui/              # ShadCN components
-│       │   ├── layout/          # Navbar, Footer, Theme
-│       │   ├── home/            # Hero, Services, FAQ, etc.
-│       │   ├── lead-generation/ # Audit form, WhatsApp, popups
-│       │   └── seo/             # JSON-LD schemas
-│       └── lib/                 # Utils, Sanity client
-├── backend/                     # Express.js API
+│       │   ├── ui/              # UI primitives
+│       │   ├── layout/          # Navbar (glass scroll), Footer (gradient)
+│       │   ├── home/            # Hero, Services, FAQ, CTA, etc.
+│       │   ├── lead-generation/ # Audit form, WhatsApp, exit popup
+│       │   └── admin/           # BlogPostEditor, PortfolioEditor, etc.
+│       └── lib/
+│           ├── blogger-feed.ts  # Shared Blogger RSS fetch + fallback
+│           └── utils.ts         # siteConfig, servicesData, cn
+├── backend/                     # Express.js REST API
 │   ├── src/
-│   │   ├── index.ts             # Server entry
-│   │   ├── routes/              # Auth, leads, blog, contact
-│   │   └── middleware/          # JWT auth, validation
+│   │   ├── index.ts             # Server + CORS + rate limiting
+│   │   ├── lib/prisma.ts        # Shared PrismaClient singleton
+│   │   ├── routes/              # auth, leads, blog, cases, portfolio...
+│   │   └── middleware/          # JWT auth, Zod validation
 │   └── prisma/
-│       └── schema.prisma        # 10 database models
-└── .github/workflows/           # CI/CD pipeline
+│       └── schema.prisma        # 9 database models
+└── .github/workflows/
+    └── deploy-frontend.yml      # Auto-deploy on push to main
 ```
 
----
+## Portfolio Projects
 
-## Pages (33 Static Routes)
+| Project | Description |
+|---------|-------------|
+| ExCompany | Corporate website for a business services firm |
+| Zubilo Studio | Creative agency brand site with portfolio showcase |
+| ScrapCo | Recycling marketplace with inventory management |
+| EZ Dry | Laundry service booking platform |
+| PogoTunes | Music streaming platform with curated playlists |
+| Safe Raahia | Women's safety app information portal |
+| ElectroBridge | Electrical services marketplace connecting customers with professionals |
+| RankrSEO | This site — SEO agency built with Next.js |
 
-| Route | Type | Description |
-|-------|------|-------------|
-| `/` | Static | Hero, Services, Why Us, Process, Testimonials, Industries, FAQ, CTA |
-| `/about` | Static | Founder story, mission, vision, values |
-| `/services` | Static | Services overview grid |
-| `/services/[slug]` | SSG | 8 individual service detail pages |
-| `/portfolio` | Static | Filterable portfolio grid |
-| `/blog` | Static | Blog with search, categories, pagination |
-| `/blog/[slug]` | SSG | Blog post detail with author & sharing |
-| `/cases/[slug]` | SSG | Case study detail (problem, strategy, results) |
-| `/contact` | Static | Contact form, Calendly, map, WhatsApp |
-| `/admin/*` | Static | Dashboard, leads, blog, testimonials, portfolio, cases, analytics |
+## Key Features
 
----
-
-## Lead Generation Features
-
-- **Free SEO Audit** — Modal form (name, email, website, phone) with Zod validation
-- **Sticky CTA Bar** — Appears at 30% scroll, promotes audit
-- **Floating WhatsApp** — Fixed green button, links to WhatsApp
-- **Exit Intent Popup** — Detects mouse leaving, offers free audit
-- **Contact Form** — Full form with service dropdown & budget
-
----
-
-## SEO Implementation
-
-- Dynamic `<title>` & `<meta>` per page via `generateMetadata`
-- `sitemap.xml` — auto-generated with all routes
-- `robots.txt` — allows all, disallows `/admin/` and `/api/`
-- JSON-LD schemas: Organization, LocalBusiness, FAQ, Article, BreadcrumbList
-- Open Graph & Twitter Card meta tags
-- Semantic HTML with proper heading hierarchy
-
----
-
-## Free Deployment Guide
-
-### 1. Frontend — Vercel (Free)
-
-```bash
-# 1. Push code to GitHub
-git add -A && git commit -m "Ready for deploy" && git push
-
-# 2. Go to https://vercel.com/new
-#    - Import your GitHub repo
-#    - Set Root Directory: frontend
-#    - Framework: Next.js
-#    - Environment Variables:
-#      - NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
-#      - NEXT_PUBLIC_API_URL=https://your-backend.onrender.com/api
-#      - NEXTAUTH_URL=https://your-domain.vercel.app
-#      - NEXTAUTH_SECRET=<generate with: openssl rand -base64 32>
-#
-# 3. Click Deploy
-```
-
-### 2. Database — Neon (Free)
-
-```bash
-# 1. Go to https://neon.tech
-# 2. Sign up with GitHub
-# 3. Create a new project (PostgreSQL 16)
-# 4. Copy the DATABASE_URL (looks like: postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require)
-# 5. Save this for the backend
-```
-
-### 3. Backend — Render (Free)
-
-```bash
-# 1. Go to https://render.com
-# 2. Click "New +" → "Web Service"
-# 3. Connect your GitHub repo
-# 4. Configure:
-#    - Name: rankrseo-api
-#    - Root Directory: backend
-#    - Build Command: npm install && npx prisma generate && npm run build
-#    - Start Command: npm start
-#    - Instance Type: Free
-# 5. Add Environment Variables:
-#    - DATABASE_URL=<from Neon>
-#    - JWT_SECRET=<generate with: openssl rand -base64 32>
-#    - CORS_ORIGIN=https://your-frontend.vercel.app
-#    - PORT=5000
-#    - NODE_ENV=production
-# 6. Click "Create Web Service"
-```
-
-### 4. Media — Cloudinary (Free)
-
-```bash
-# 1. Go to https://cloudinary.com
-# 2. Sign up for free tier (25GB storage)
-# 3. Copy CLOUDINARY_URL from dashboard
-# 4. Add to Vercel env vars if using images
-```
-
-### 5. Custom Domain (Optional)
-
-```bash
-# Vercel: Project Settings → Domains → Add your domain
-# Render: Dashboard → Your Service → Settings → Custom Domain
-```
-
-### 6. Post-Deployment Checklist
-
-- [x] Site loads at custom domain (HTTPS)
-- [x] All pages render (check /, /services/seo, /blog, /contact)
-- [x] Contact form submits successfully
-- [x] SEO audit modal opens and submits
-- [x] WhatsApp button links correctly
-- [x] Admin dashboard loads (/admin)
-- [x] Sitemap accessible (/sitemap.xml)
-- [x] Robots.txt accessible (/robots.txt)
-- [x] Lighthouse score 90+ (test in incognito)
-- [x] Google Search Console verified
-- [x] Google Analytics 4 tracking active
-
----
-
-## Local Development
-
-### Prerequisites
-
-- Node.js 18+
-- npm
-- PostgreSQL (or Neon connection string)
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-cp .env.example .env.local
-# Edit .env.local with your values
-npm run dev
-# Opens at http://localhost:3000
-```
-
-### Backend
-
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with DATABASE_URL and JWT_SECRET
-npx prisma db push    # Sync database schema
-npm run dev
-# Runs at http://localhost:5000
-```
-
-### Environment Variables
-
-**Frontend** (`frontend/.env.local`):
-```
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-NEXT_PUBLIC_SANITY_PROJECT_ID=
-NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_GA_ID=
-NEXT_PUBLIC_GTM_ID=
-NEXT_PUBLIC_CALENDLY_URL=
-NEXT_PUBLIC_WHATSAPP_NUMBER=919999999999
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-here
-```
-
-**Backend** (`backend/.env`):
-```
-PORT=5000
-DATABASE_URL=postgresql://user:pass@localhost:5432/rankrseo
-JWT_SECRET=your-jwt-secret-here
-CORS_ORIGIN=http://localhost:3000
-NODE_ENV=development
-```
-
----
-
-## Services Offered
-
-| Service | Route |
-|---------|-------|
-| SEO Services | `/services/seo` |
-| Local SEO | `/services/local-seo` |
-| Technical SEO | `/services/technical-seo` |
-| Link Building | `/services/link-building` |
-| Web Design | `/services/web-design` |
-| Content Marketing | `/services/content-marketing` |
-| Google Business Profile | `/services/google-business-profile` |
-| PPC Advertising | `/services/ppc` |
-
----
+- **60+ pages**, zero build errors
+- Premium glassmorphism design with gradient orbs and animations
+- SEO-optimized with OG/Twitter metadata, JSON-LD, sitemap
+- Blog with 25 SSG posts sourced from Blogger RSS feed
+- Full admin dashboard (analytics, leads, blog, cases, portfolio, testimonials, settings)
+- Lead generation: SEO audit modal, floating WhatsApp, exit-intent popup, sticky CTA
+- Responsive design with dark mode support
+- Framer Motion page transitions and scroll-triggered animations
 
 ## CI/CD
 
-GitHub Actions workflow (`.github/workflows/ci.yml`):
-- **Frontend:** `npm install` → `npm run lint` → `npm run build`
-- **Backend:** `npm install` → `npx prisma generate` → `npm run build`
+### Frontend Deploy (GitHub Actions)
+- Triggered on push to `main` affecting `frontend/**`
+- Curls Vercel Deploy Hook → Vercel builds & deploys
+- Requires `VERCEL_DEPLOY_HOOK` secret in GitHub
 
-Runs on every push to `main` and on Pull Requests.
+### Backend Deploy (Render)
+- Auto-deploys from GitHub on push to `main`
+- Build: `npm install && npx prisma generate && npm run build`
 
----
+## Quick Start
+
+```bash
+# Frontend
+cd frontend && npm install && npm run dev
+
+# Backend
+cd backend && npm install && npx prisma db push && npm run dev
+```
+
+## Deployed URLs
+
+- **Frontend:** https://rankrseo.vercel.app
+- **Backend API:** https://rankrseo.onrender.com
+- **Health:** https://rankrseo.onrender.com/health
 
 ## License
 
