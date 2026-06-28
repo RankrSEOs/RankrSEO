@@ -9,6 +9,7 @@ import { Plus, Pencil, Trash2, Eye, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 export default function PortfolioPage() {
+  useEffect(() => { document.title = "Portfolio | RankrSEO Admin" }, [])
   const [items, setItems] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [editorOpen, setEditorOpen] = useState(false)

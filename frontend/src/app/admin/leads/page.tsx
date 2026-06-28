@@ -18,6 +18,7 @@ const statusColors: Record<string, string> = {
 }
 
 export default function LeadsPage() {
+  useEffect(() => { document.title = "Leads | RankrSEO Admin" }, [])
   const [leads, setLeads] = useState<Array<{
     id: string; name: string; email: string; phone: string | null;
     website: string | null; company: string | null; service: string | null;

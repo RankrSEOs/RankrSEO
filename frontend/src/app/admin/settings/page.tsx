@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2, Save } from "lucide-react"
 
 export default function SettingsPage() {
+  useEffect(() => { document.title = "Settings | RankrSEO Admin" }, [])
   const [values, setValues] = useState<Record<string, string>>({
     agencyName: "RankrSEO",
     contactEmail: "rankrseo@gmail.com",

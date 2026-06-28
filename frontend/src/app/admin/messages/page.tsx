@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Loader2, MailOpen, Mail as MailIcon, Trash2 } from "lucide-react"
 
 export default function MessagesPage() {
+  useEffect(() => { document.title = "Messages | RankrSEO Admin" }, [])
   const [messages, setMessages] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState<Record<string, unknown> | null>(null)

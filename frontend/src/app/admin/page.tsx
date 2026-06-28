@@ -11,6 +11,7 @@ import {
 import { Users, FileText, Star, TrendingUp, Mail, Loader2 } from "lucide-react"
 
 export default function AdminDashboard() {
+  useEffect(() => { document.title = "Dashboard | RankrSEO Admin" }, [])
   const [stats, setStats] = useState({
     leads: 0,
     messages: 0,

@@ -8,6 +8,7 @@ import { CaseStudyEditor } from "@/components/admin/CaseStudyEditor"
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react"
 
 export default function CasesPage() {
+  useEffect(() => { document.title = "Case Studies | RankrSEO Admin" }, [])
   const [items, setItems] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [editorOpen, setEditorOpen] = useState(false)

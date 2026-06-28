@@ -1,9 +1,11 @@
 "use client"
 
+import { useEffect } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { BarChart3, ExternalLink } from "lucide-react"
 
 export default function AnalyticsPage() {
+  useEffect(() => { document.title = "Analytics | RankrSEO Admin" }, [])
   return (
     <div className="space-y-6">
       <div>

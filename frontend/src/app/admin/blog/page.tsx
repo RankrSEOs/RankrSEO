@@ -8,6 +8,7 @@ import { BlogPostEditor } from "@/components/admin/BlogPostEditor"
 import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from "lucide-react"
 
 export default function BlogPage() {
+  useEffect(() => { document.title = "Blog Posts | RankrSEO Admin" }, [])
   const [posts, setPosts] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState<string | null>(null)

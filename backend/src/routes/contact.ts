@@ -27,6 +27,26 @@ router.post('/', validate(contactSchema), async (req: Request, res: Response) =>
   }
 });
 
+const markReadSchema = z.object({ read: z.boolean() });
+
+router.patch('/:id', authenticate, validate(markReadSchema), async (req: Request, res: Response) => {
+  try {
+    const existing = await prisma.contactMessage.findUnique({ where: { id: req.params.id as string } });
+    if (!existing) {
+      res.status(404).json({ error: 'Message not found' });
+      return;
+    }
+    const message = await prisma.contactMessage.update({
+      where: { id: req.params.id as string },
+      data: { read: req.body.read },
+    });
+    res.json(message);
+  } catch (error) {
+    console.error('Update message error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.get('/', authenticate, async (req: Request, res: Response) => {
   try {
     const { read } = req.query;

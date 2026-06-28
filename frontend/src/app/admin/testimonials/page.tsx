@@ -8,6 +8,7 @@ import { TestimonialEditor } from "@/components/admin/TestimonialEditor"
 import { Plus, Pencil, Trash2, Star, Loader2 } from "lucide-react"
 
 export default function TestimonialsPage() {
+  useEffect(() => { document.title = "Testimonials | RankrSEO Admin" }, [])
   const [items, setItems] = useState<Array<Record<string, unknown>>>([])
   const [loading, setLoading] = useState(true)
   const [editorOpen, setEditorOpen] = useState(false)

@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export function validate(schema: ZodSchema) {
   return (req: Request, res: Response, next: NextFunction): void => {
     try {
@@ -12,7 +14,10 @@ export function validate(schema: ZodSchema) {
           field: e.path.join('.'),
           message: e.message,
         }));
-        res.status(400).json({ error: 'Validation failed', details });
+        res.status(400).json({
+          error: 'Validation failed',
+          ...(isProduction ? {} : { details }),
+        });
         return;
       }
       next(error);
