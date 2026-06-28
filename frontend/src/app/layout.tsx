@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Poppins } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
@@ -13,6 +13,12 @@ import { faqData } from "@/lib/utils"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-heading",
 })
 
 export const metadata: Metadata = {
@@ -40,7 +46,7 @@ export const metadata: Metadata = {
     description:
       "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar. Serving clients in USA, UK, Canada, Australia & India.",
     url: "https://rankrseo.com",
-    images: [{ url: "/og-image.png", width: 310, height: 320 }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
@@ -61,14 +67,14 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://rankrseo.com" },
   icons: {
-    icon: [{ url: "/favicon.jpg", type: "image/jpeg" }, { url: "/favicon.ico", sizes: "any" }],
+    icon: [{ url: "/favicon.jpg", type: "image/jpeg" }, { url: "/favicon-cropped.jpg", type: "image/jpeg" }, { url: "/favicon.ico", sizes: "any" }],
     apple: "/favicon.jpg",
   },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
       <head>
         <LocalBusinessJsonLd />
         <FaqJsonLd faqs={faqData.map((f) => ({ question: f.q, answer: f.a }))} />

@@ -69,7 +69,7 @@ export default function AboutContent() {
             </span>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               We Build Brands That
-              <span className="text-[#22C55E]"> Rank Higher</span>
+              <span className="text-[#14B8A6]"> Rank Higher</span>
             </h1>
             <p className="mt-6 text-lg text-white/70 sm:text-xl">
               RankrSEO is a boutique digital marketing agency obsessed with one
@@ -91,13 +91,13 @@ export default function AboutContent() {
               transition={{ duration: 0.6 }}
               className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 via-[#0F172A]/40 to-[#22C55E]/20" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 via-[#0F172A]/40 to-[#14B8A6]/20" />
               <div
                 className="absolute inset-0 opacity-20"
                 style={{
                   backgroundImage: `
                     radial-gradient(circle at 20% 30%, #2563EB 0%, transparent 50%),
-                    radial-gradient(circle at 80% 70%, #22C55E 0%, transparent 50%)
+                    radial-gradient(circle at 80% 70%, #14B8A6 0%, transparent 50%)
                   `,
                 }}
               />

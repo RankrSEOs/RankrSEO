@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const siteConfig = {
   name: "RankrSEO",
-  tagline: "Grow Your Business. Dominate Search.",
+  tagline: "SEO Agency & Digital Marketing Services",
   description: "RankrSEO is a results-driven digital marketing agency founded by Amit Kumar. We help businesses increase online visibility, generate qualified leads, and grow revenue through SEO, web design, content marketing, and paid advertising.",
   url: "https://rankrseo.com",
   email: "rankrseo@gmail.com",

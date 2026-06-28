@@ -25,7 +25,7 @@ export default function FounderSection() {
                 style={{
                   backgroundImage: `
                     radial-gradient(circle at 30% 20%, #2563EB 0%, transparent 50%),
-                    radial-gradient(circle at 70% 80%, #22C55E 0%, transparent 50%)
+                    radial-gradient(circle at 70% 80%, #14B8A6 0%, transparent 50%)
                   `,
                 }}
               />
