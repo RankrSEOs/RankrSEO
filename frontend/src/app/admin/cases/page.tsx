@@ -74,8 +74,8 @@ export default function CasesPage() {
                         <td className="py-3 text-muted-foreground text-nowrap">{new Date(cs.createdAt as string).toLocaleDateString()}</td>
                         <td className="py-3">
                           <div className="flex items-center gap-2">
-                            <button onClick={() => { setEditing(cs); setEditorOpen(true) }} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-4" /></button>
-                            <button onClick={() => handleDelete(cs.id as string)} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-4" /></button>
+                            <button onClick={() => { setEditing(cs); setEditorOpen(true) }} aria-label="Edit" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-4" /></button>
+                            <button onClick={() => handleDelete(cs.id as string)} aria-label="Delete" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-4" /></button>
                           </div>
                         </td>
                       </tr>

@@ -47,13 +47,13 @@ router.post('/', authenticate, validate(createSchema), async (req: Request, res:
 
 router.patch('/:id', authenticate, validate(updateSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.testimonial.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.testimonial.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Testimonial not found' });
       return;
     }
     const testimonial = await prisma.testimonial.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: req.body,
     });
     res.json(testimonial);
@@ -65,12 +65,12 @@ router.patch('/:id', authenticate, validate(updateSchema), async (req: Request, 
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.testimonial.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.testimonial.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Testimonial not found' });
       return;
     }
-    await prisma.testimonial.delete({ where: { id: req.params.id as string } });
+    await prisma.testimonial.delete({ where: { id: String(req.params.id) } });
     res.status(204).send();
   } catch (error) {
     console.error('Delete testimonial error:', error);

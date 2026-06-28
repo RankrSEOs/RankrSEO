@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { adminApi } from "@/lib/admin-api"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, MailOpen, Mail as MailIcon, Trash2 } from "lucide-react"
+import { Loader2, MailOpen, Mail as MailIcon } from "lucide-react"
 
 export default function MessagesPage() {
   useEffect(() => { document.title = "Messages | RankrSEO Admin" }, [])
@@ -73,7 +73,7 @@ export default function MessagesPage() {
           <div className="w-full max-w-lg rounded-2xl border bg-card p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-bold">Message Details</h2>
-              <button onClick={() => setSelected(null)} className="text-muted-foreground hover:text-foreground">✕</button>
+              <button onClick={() => setSelected(null)} aria-label="Close" className="text-muted-foreground hover:text-foreground">✕</button>
             </div>
             <dl className="space-y-3 text-sm">
               {Object.entries(selected).filter(([k]) => !["id", "read"].includes(k)).map(([key, val]) => (

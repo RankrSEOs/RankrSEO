@@ -94,7 +94,7 @@ export function BlogPostEditor({ post, onClose, onSaved }: BlogPostEditorProps) 
       <div className="w-full max-w-2xl rounded-2xl border bg-card p-6 shadow-2xl">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-bold">{post ? "Edit Post" : "New Post"}</h2>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
+          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground">
             <X className="size-5" />
           </button>
         </div>

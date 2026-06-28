@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, Sun, Moon, Search, BarChart3, Sparkles } from "lucide-react"
+import { Menu, X, ChevronDown, Sun, Moon, Search, Sparkles } from "lucide-react"
 import { useTheme } from "@/components/layout/ThemeProvider"
 import { servicesData } from "@/lib/utils"
 import { cn } from "@/lib/utils"
@@ -61,7 +61,7 @@ export default function Navbar() {
         <div className="container flex h-16 sm:h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative">
-              <img src="/logo.svg" alt="RankrSEO" className="h-9 w-auto transition-transform duration-300 group-hover:scale-105" />
+              <img src="/logo.svg" alt="RankrSEO" loading="lazy" className="h-9 w-auto transition-transform duration-300 group-hover:scale-105" />
               <div className="absolute -inset-2 rounded-full bg-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 blur-lg" />
             </div>
           </Link>
@@ -195,7 +195,7 @@ export default function Navbar() {
                 transition={{ type: "spring", damping: 30, stiffness: 250 }}
               >
                 <div className="flex items-center justify-between border-b border-border/50 px-5 h-16">
-                  <img src="/logo.svg" alt="RankrSEO" className="h-8 w-auto" />
+                  <img src="/logo.svg" alt="RankrSEO" loading="lazy" className="h-8 w-auto" />
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="flex size-9 items-center justify-center rounded-xl transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

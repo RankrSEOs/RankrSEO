@@ -42,7 +42,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:slug', async (req: Request, res: Response) => {
   try {
     const item = await prisma.portfolio.findUnique({
-      where: { slug: req.params.slug as string },
+      where: { slug: String(req.params.slug) },
     });
     if (!item) {
       res.status(404).json({ error: 'Portfolio item not found' });
@@ -67,13 +67,13 @@ router.post('/', authenticate, validate(createSchema), async (req: Request, res:
 
 router.patch('/:id', authenticate, validate(updateSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.portfolio.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.portfolio.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Portfolio item not found' });
       return;
     }
     const item = await prisma.portfolio.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: req.body,
     });
     res.json(item);
@@ -85,12 +85,12 @@ router.patch('/:id', authenticate, validate(updateSchema), async (req: Request, 
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.portfolio.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.portfolio.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Portfolio item not found' });
       return;
     }
-    await prisma.portfolio.delete({ where: { id: req.params.id as string } });
+    await prisma.portfolio.delete({ where: { id: String(req.params.id) } });
     res.status(204).send();
   } catch (error) {
     console.error('Delete portfolio error:', error);

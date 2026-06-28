@@ -64,7 +64,7 @@ export function PortfolioEditor({ item, onClose, onSaved }: Props) {
       <div className="w-full max-w-2xl rounded-2xl border bg-card p-6 shadow-2xl">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-bold">{item ? "Edit Portfolio Item" : "New Portfolio Item"}</h2>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground"><X className="size-5" /></button>
+          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground"><X className="size-5" /></button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</div>}

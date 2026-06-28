@@ -39,8 +39,8 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     const { page = '1', limit = '10', category, tag, featured } = req.query;
 
-    const pageNum = Math.max(1, parseInt(page as string, 10) || 1);
-    const limitNum = Math.min(50, Math.max(1, parseInt(limit as string, 10) || 10));
+    const pageNum = Math.max(1, parseInt(String(page), 10) || 1);
+    const limitNum = Math.min(50, Math.max(1, parseInt(String(limit), 10) || 10));
     const skip = (pageNum - 1) * limitNum;
 
     const where: Prisma.BlogPostWhereInput = { published: true };
@@ -86,7 +86,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:slug', async (req: Request, res: Response) => {
   try {
     const post = await prisma.blogPost.findUnique({
-      where: { slug: req.params.slug as string },
+      where: { slug: String(req.params.slug) },
       include: { category: true },
     });
 
@@ -114,14 +114,14 @@ router.post('/', authenticate, validate(createPostSchema), async (req: Request, 
 
 router.patch('/:id', authenticate, validate(updatePostSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.blogPost.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.blogPost.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Post not found' });
       return;
     }
 
     const post = await prisma.blogPost.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: req.body,
     });
 
@@ -134,13 +134,13 @@ router.patch('/:id', authenticate, validate(updatePostSchema), async (req: Reque
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.blogPost.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.blogPost.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Post not found' });
       return;
     }
 
-    await prisma.blogPost.delete({ where: { id: req.params.id as string } });
+    await prisma.blogPost.delete({ where: { id: String(req.params.id) } });
     res.status(204).send();
   } catch (error) {
     console.error('Delete blog post error:', error);

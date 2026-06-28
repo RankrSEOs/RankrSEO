@@ -2,9 +2,8 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, BarChart3, MessageCircle, CheckCircle, Sparkles, Star } from "lucide-react"
+import { ArrowRight, MessageCircle, CheckCircle, Sparkles, Star } from "lucide-react"
 import { siteConfig } from "@/lib/utils"
-import { cn } from "@/lib/utils"
 import { SeoAuditForm } from "@/components/lead-generation/SeoAuditForm"
 
 const benefits = [

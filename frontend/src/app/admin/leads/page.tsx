@@ -212,7 +212,7 @@ function LeadDetailModal({ leadId, onClose }: { leadId: string; onClose: () => v
       <div className="w-full max-w-lg rounded-2xl border bg-card p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold">Lead Details</h2>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground">✕</button>
+          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground">✕</button>
         </div>
         {loading ? (
           <div className="flex justify-center py-8"><Loader2 className="size-5 animate-spin text-primary" /></div>

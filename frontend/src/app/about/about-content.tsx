@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Target, Eye, Heart, ArrowRight, ArrowUpRight, Quote, UserCheck, Sparkles, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import ProcessSection from "@/components/home/ProcessSection"
-import { cn } from "@/lib/utils"
+
 
 const values = [
   {

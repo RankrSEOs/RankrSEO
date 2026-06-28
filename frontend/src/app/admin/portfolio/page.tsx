@@ -56,8 +56,8 @@ export default function PortfolioPage() {
                       {item.slug ? (
                         <Link href={`/cases/${item.slug}`} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Eye className="size-3.5" /></Link>
                       ) : null}
-                      <button onClick={() => { setEditing(item); setEditorOpen(true) }} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-3.5" /></button>
-                      <button onClick={() => handleDelete(item.id as string)} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-3.5" /></button>
+                      <button onClick={() => { setEditing(item); setEditorOpen(true) }} aria-label="Edit" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-3.5" /></button>
+                      <button onClick={() => handleDelete(item.id as string)} aria-label="Delete" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-3.5" /></button>
                     </div>
                   </div>
                   {item.category ? (

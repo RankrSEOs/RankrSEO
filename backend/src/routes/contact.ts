@@ -31,13 +31,13 @@ const markReadSchema = z.object({ read: z.boolean() });
 
 router.patch('/:id', authenticate, validate(markReadSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.contactMessage.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.contactMessage.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Message not found' });
       return;
     }
     const message = await prisma.contactMessage.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: { read: req.body.read },
     });
     res.json(message);

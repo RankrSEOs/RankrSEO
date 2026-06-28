@@ -30,7 +30,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2 group">
-              <img src="/logo-white.svg" alt="RankrSEO" className="h-9 w-auto" />
+              <img src="/logo-white.svg" alt="RankrSEO" loading="lazy" className="h-9 w-auto" />
               <Sparkles className="size-4 text-accent opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </Link>
             <p className="mt-1 text-xs font-medium uppercase tracking-widest text-white/30">

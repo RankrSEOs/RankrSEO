@@ -122,6 +122,7 @@ export default function BlogPage() {
                             <button
                               onClick={() => handleDelete(post.id as string)}
                               disabled={actionLoading === post.id}
+                              aria-label="Delete"
                               className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive disabled:opacity-40"
                             >
                               <Trash2 className="size-4" />

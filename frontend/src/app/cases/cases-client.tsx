@@ -3,7 +3,6 @@
 import { motion } from "framer-motion"
 import { TrendingUp, Users, Star, ArrowRight, Sparkles, BarChart3 } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 
 type CaseStudy = {
   id: string; title: string; industry: string; challenge: string; solution: string

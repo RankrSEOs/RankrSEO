@@ -62,8 +62,8 @@ export default function TestimonialsPage() {
                           ))}
                         </div>
                       ) : null}
-                      <button onClick={() => { setEditing(t); setEditorOpen(true) }} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-4" /></button>
-                      <button onClick={() => handleDelete(t.id as string)} className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-4" /></button>
+                      <button onClick={() => { setEditing(t); setEditorOpen(true) }} aria-label="Edit" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Pencil className="size-4" /></button>
+                      <button onClick={() => handleDelete(t.id as string)} aria-label="Delete" className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"><Trash2 className="size-4" /></button>
                     </div>
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground/80">&ldquo;{t.content as string}&rdquo;</p>

@@ -75,7 +75,7 @@ router.get('/', authenticate, async (req: Request, res: Response) => {
 
 router.get('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const lead = await prisma.lead.findUnique({ where: { id: req.params.id as string } });
+    const lead = await prisma.lead.findUnique({ where: { id: String(req.params.id) } });
 
     if (!lead) {
       res.status(404).json({ error: 'Lead not found' });
@@ -91,13 +91,13 @@ router.get('/:id', authenticate, async (req: Request, res: Response) => {
 
 router.patch('/:id', authenticate, validate(updateLeadSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.lead.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.lead.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Lead not found' });
       return;
     }
     const lead = await prisma.lead.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: req.body,
     });
 
@@ -110,12 +110,12 @@ router.patch('/:id', authenticate, validate(updateLeadSchema), async (req: Reque
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.lead.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.lead.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Lead not found' });
       return;
     }
-    await prisma.lead.delete({ where: { id: req.params.id as string } });
+    await prisma.lead.delete({ where: { id: String(req.params.id) } });
     res.status(204).send();
   } catch (error) {
     console.error('Delete lead error:', error);

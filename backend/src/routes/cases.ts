@@ -42,7 +42,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:slug', async (req: Request, res: Response) => {
   try {
     const study = await prisma.caseStudy.findUnique({
-      where: { slug: req.params.slug as string },
+      where: { slug: String(req.params.slug) },
     });
     if (!study || !study.published) {
       res.status(404).json({ error: 'Case study not found' });
@@ -67,13 +67,13 @@ router.post('/', authenticate, validate(createCaseSchema), async (req: Request, 
 
 router.patch('/:id', authenticate, validate(updateCaseSchema), async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.caseStudy.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.caseStudy.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Case study not found' });
       return;
     }
     const study = await prisma.caseStudy.update({
-      where: { id: req.params.id as string },
+      where: { id: String(req.params.id) },
       data: req.body,
     });
     res.json(study);
@@ -85,12 +85,12 @@ router.patch('/:id', authenticate, validate(updateCaseSchema), async (req: Reque
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.caseStudy.findUnique({ where: { id: req.params.id as string } });
+    const existing = await prisma.caseStudy.findUnique({ where: { id: String(req.params.id) } });
     if (!existing) {
       res.status(404).json({ error: 'Case study not found' });
       return;
     }
-    await prisma.caseStudy.delete({ where: { id: req.params.id as string } });
+    await prisma.caseStudy.delete({ where: { id: String(req.params.id) } });
     res.status(204).send();
   } catch (error) {
     console.error('Delete case error:', error);

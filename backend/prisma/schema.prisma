@@ -75,15 +75,6 @@ model Category {
   @@index([slug])
 }
 
-model Tag {
-  id        String   @id @default(uuid())
-  name      String
-  slug      String   @unique
-  createdAt DateTime @default(now())
-
-  @@index([slug])
-}
-
 model Testimonial {
   id        String   @id @default(uuid())
   clientName String
