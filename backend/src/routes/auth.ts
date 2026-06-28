@@ -1,13 +1,12 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -21,9 +20,14 @@ const registerSchema = z.object({
   role: z.enum(['ADMIN', 'EDITOR']).optional(),
 });
 
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error('JWT_SECRET environment variable is required');
+  return secret;
+}
+
 function generateToken(userId: string, email: string, role: string): string {
-  const secret = process.env.JWT_SECRET || 'fallback-secret';
-  return jwt.sign({ userId, email, role }, secret, { expiresIn: '7d' });
+  return jwt.sign({ userId, email, role }, getJwtSecret(), { expiresIn: '7d' });
 }
 
 router.post('/login', validate(loginSchema), async (req: Request, res: Response) => {

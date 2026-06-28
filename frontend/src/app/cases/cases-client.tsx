@@ -75,7 +75,7 @@ export default function CaseStudiesClient({ caseStudies }: { caseStudies: CaseSt
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-8 transition-all duration-500 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1.5"
+                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-8 transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1.5"
               >
                 <div className="flex items-center justify-between mb-6">
                   <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{cs.industry}</span>

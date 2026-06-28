@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const createSchema = z.object({
   clientName: z.string().min(1),
@@ -22,7 +22,7 @@ const updateSchema = createSchema.partial();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { featured } = req.query;
-    const where: Record<string, unknown> = {};
+    const where: Prisma.TestimonialWhereInput = {};
     if (featured !== undefined) where.featured = featured === 'true';
     const testimonials = await prisma.testimonial.findMany({
       where,

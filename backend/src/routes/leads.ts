@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const createLeadSchema = z.object({
   name: z.string().min(1),
@@ -47,7 +47,7 @@ router.get('/', authenticate, async (req: Request, res: Response) => {
   try {
     const { status, search } = req.query;
 
-    const where: Record<string, unknown> = {};
+    const where: Prisma.LeadWhereInput = {};
 
     if (status && typeof status === 'string') {
       where.status = status;
@@ -91,6 +91,11 @@ router.get('/:id', authenticate, async (req: Request, res: Response) => {
 
 router.patch('/:id', authenticate, validate(updateLeadSchema), async (req: Request, res: Response) => {
   try {
+    const existing = await prisma.lead.findUnique({ where: { id: req.params.id as string } });
+    if (!existing) {
+      res.status(404).json({ error: 'Lead not found' });
+      return;
+    }
     const lead = await prisma.lead.update({
       where: { id: req.params.id as string },
       data: req.body,
@@ -105,6 +110,11 @@ router.patch('/:id', authenticate, validate(updateLeadSchema), async (req: Reque
 
 router.delete('/:id', authenticate, async (req: Request, res: Response) => {
   try {
+    const existing = await prisma.lead.findUnique({ where: { id: req.params.id as string } });
+    if (!existing) {
+      res.status(404).json({ error: 'Lead not found' });
+      return;
+    }
     await prisma.lead.delete({ where: { id: req.params.id as string } });
     res.status(204).send();
   } catch (error) {

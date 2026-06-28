@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const createCaseSchema = z.object({
   title: z.string().min(1),
@@ -26,7 +26,7 @@ const updateCaseSchema = createCaseSchema.partial();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { published } = req.query;
-    const where: Record<string, unknown> = {};
+    const where: Prisma.CaseStudyWhereInput = { published: true };
     if (published !== undefined) where.published = published === 'true';
     const cases = await prisma.caseStudy.findMany({
       where,
@@ -44,7 +44,7 @@ router.get('/:slug', async (req: Request, res: Response) => {
     const study = await prisma.caseStudy.findUnique({
       where: { slug: req.params.slug as string },
     });
-    if (!study) {
+    if (!study || !study.published) {
       res.status(404).json({ error: 'Case study not found' });
       return;
     }

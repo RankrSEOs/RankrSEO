@@ -6,6 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import { prisma } from './lib/prisma';
 
 import authRoutes from './routes/auth';
 import leadsRoutes from './routes/leads';
@@ -22,7 +23,12 @@ const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000' }));
+const corsOrigin = process.env.CORS_ORIGIN || (isProduction ? '' : 'http://localhost:3000');
+if (isProduction && !process.env.CORS_ORIGIN) {
+  console.error('FATAL: CORS_ORIGIN environment variable is required in production');
+  process.exit(1);
+}
+app.use(cors({ origin: corsOrigin }));
 
 app.use(isProduction ? morgan('combined') : morgan('dev'));
 
@@ -69,10 +75,6 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/settings', settingsRoutes);
 
-app.get('/api/health', (_req: Request, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: 'Not found' });
 });
@@ -85,8 +87,19 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`RankrSEO Backend running on port ${PORT} [${isProduction ? 'production' : 'development'}]`);
 });
+
+function gracefulShutdown(signal: string) {
+  console.log(`Received ${signal}, shutting down gracefully...`);
+  server.close(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+}
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 export default app;

@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const createPostSchema = z.object({
   title: z.string().min(1),
@@ -43,7 +43,7 @@ router.get('/', async (req: Request, res: Response) => {
     const limitNum = Math.min(50, Math.max(1, parseInt(limit as string, 10) || 10));
     const skip = (pageNum - 1) * limitNum;
 
-    const where: Record<string, unknown> = { published: true };
+    const where: Prisma.BlogPostWhereInput = { published: true };
 
     if (category && typeof category === 'string') {
       where.category = { slug: category };

@@ -31,7 +31,11 @@ export function authenticate(req: Request, res: Response, next: NextFunction): v
   }
 
   try {
-    const secret = process.env.JWT_SECRET || 'fallback-secret';
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      res.status(500).json({ error: 'Server configuration error: JWT secret not set' });
+      return;
+    }
     const decoded = jwt.verify(token, secret) as AuthPayload;
     req.user = decoded;
     next();
