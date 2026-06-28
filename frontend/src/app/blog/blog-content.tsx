@@ -2,12 +2,12 @@
 
 import { useState, useMemo } from "react"
 import { motion } from "framer-motion"
-import { Search, ChevronLeft, ChevronRight, Calendar, User, ArrowRight, ExternalLink, Loader2 } from "lucide-react"
+import { Search, ChevronLeft, ChevronRight, Calendar, User, ArrowRight, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import BlogFeaturedImage from "@/components/ui/BlogFeaturedImage"
 
 interface BloggerPost {
-  id: string; title: string; url: string; published: string
+  id: string; title: string; slug: string; url: string; published: string
   author: string; categories: string[]; summary: string
 }
 
@@ -93,12 +93,12 @@ export default function BlogContent({ initialPosts }: { initialPosts: BloggerPos
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {paginatedPosts.map((post, i) => (
               <motion.article
-                key={post.id || post.url}
+                key={post.id || post.slug}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
               >
-                <a href={post.url} target="_blank" rel="noopener noreferrer" className="group block">
+                <a href={post.slug ? `/blog/${post.slug}` : post.url} className="group block">
                   <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary/5 h-full flex flex-col">
                     <BlogFeaturedImage
                       title={post.title}
@@ -113,7 +113,7 @@ export default function BlogContent({ initialPosts }: { initialPosts: BloggerPos
                       <h3 className="mt-3 text-lg font-semibold text-card-foreground group-hover:text-primary transition-colors line-clamp-2">{post.title}</h3>
                       <p className="mt-2 line-clamp-3 text-sm text-muted-foreground flex-1">{post.summary}</p>
                       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                        Read on Blog<ExternalLink className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                        Read More<ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                       </span>
                     </div>
                   </div>
