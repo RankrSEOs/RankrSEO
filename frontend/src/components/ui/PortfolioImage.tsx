@@ -178,6 +178,32 @@ const portfolioImages: Record<string, { viewBox: string; paths: React.ReactNode 
       </g>
     ),
   },
+  electrobridge: {
+    viewBox: "0 0 400 300",
+    paths: (
+      <g>
+        <rect x="50" y="60" width="300" height="200" rx="16" fill="currentColor" className="text-blue-50 dark:text-blue-900/20" />
+        <rect x="50" y="60" width="300" height="200" rx="16" fill="currentColor" className="text-blue-100 dark:text-blue-900/30" />
+        <circle cx="200" cy="130" r="50" fill="currentColor" className="text-blue-200 dark:text-blue-800/40" />
+        <circle cx="200" cy="130" r="36" fill="currentColor" className="text-blue-500" />
+        <path d="M188 106 L188 124 L176 124 L212 154 L212 136 L224 136 L188 106Z" fill="white" opacity="0.9" />
+        <rect x="120" y="210" width="60" height="8" rx="4" fill="currentColor" className="text-blue-400" />
+        <rect x="120" y="222" width="80" height="8" rx="4" fill="currentColor" className="text-blue-300" />
+        <rect x="120" y="234" width="40" height="8" rx="4" fill="currentColor" className="text-blue-400" />
+        <rect x="220" y="210" width="60" height="8" rx="4" fill="currentColor" className="text-blue-400" />
+        <rect x="220" y="222" width="80" height="8" rx="4" fill="currentColor" className="text-blue-300" />
+        <rect x="220" y="234" width="40" height="8" rx="4" fill="currentColor" className="text-blue-400" />
+        <path d="M160 80 L240 80" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-blue-400" />
+        <path d="M180 92 L220 92" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-blue-300" />
+        <rect x="280" y="100" width="50" height="50" rx="8" fill="currentColor" className="text-accent-500" />
+        <path d="M300 116 L300 134 M291 125 L309 125" stroke="white" strokeWidth="3" strokeLinecap="round" />
+        <rect x="70" y="100" width="50" height="50" rx="8" fill="currentColor" className="text-primary-500" />
+        <path d="M82 130 L108 130" stroke="white" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="95" cy="115" r="4" fill="white" opacity="0.8" />
+        <circle cx="95" cy="145" r="4" fill="white" opacity="0.8" />
+      </g>
+    ),
+  },
   rankrseo: {
     viewBox: "0 0 400 300",
     paths: (

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import {
   X, ArrowUpRight, Search, Loader2, ChevronLeft, ChevronRight,
+  ExternalLink, Sparkles, Eye, Globe,
 } from "lucide-react"
 import * as Dialog from "@radix-ui/react-dialog"
 
@@ -29,6 +30,7 @@ const THEME_COLORS: Record<string, string> = {
   ezdry: "#2563EB",
   pogotunes: "#D97706",
   saferaahia: "#7C3AED",
+  electrobridge: "#2563EB",
   rankrseo: "#2563EB",
 }
 
@@ -39,6 +41,7 @@ const GRADIENT_MAP: Record<string, string> = {
   "ezdry": "from-blue-600 to-cyan-500",
   "pogotunes": "from-yellow-500 to-orange-500",
   "saferaahia": "from-purple-600 to-pink-500",
+  "electrobridge": "from-blue-600 to-accent",
   "rankrseo": "from-primary to-accent",
 }
 
@@ -92,6 +95,14 @@ const hardcodedPortfolio: PortfolioItem[] = [
     website: "https://saferaahia.netlify.app/",
   },
   {
+    id: "electrobridge", title: "ElectroBridge", category: "Web Development",
+    description: "Built a modern electrical services marketplace platform with online booking, service area management, local SEO optimization, and real-time quote generation.",
+    client: "ElectroBridge",
+    results: ["Website Development", "Local SEO", "Technical SEO", "Online Booking System", "Performance Optimization"],
+    gradient: "from-blue-600 to-accent",
+    website: "https://electrobridge.vercel.app/",
+  },
+  {
     id: "rankrseo", title: "RankrSEO", category: "Full Service",
     description: "Complete agency website — design, development, SEO strategy, branding, UI/UX, and conversion optimization for RankrSEO itself.",
     client: "RankrSEO",
@@ -103,6 +114,23 @@ const hardcodedPortfolio: PortfolioItem[] = [
 
 const categories = ["All", "Web Design", "Web Development", "Full Service", "Corporate"]
 const caseStudySlugs = new Set(["techflow-seo", "greenleaf-web", "brickhouse-local"])
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.06 } },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+}
+
+const categoryGradients: Record<string, string> = {
+  "Corporate": "from-slate-500/20 to-slate-600/10",
+  "Web Design": "from-orange-500/20 to-red-500/10",
+  "Web Development": "from-green-500/20 to-emerald-500/10",
+  "Full Service": "from-primary/20 to-accent/10",
+}
 
 export default function PortfolioContent() {
   const [activeFilter, setActiveFilter] = useState("All")
@@ -168,16 +196,16 @@ export default function PortfolioContent() {
         className="relative flex min-h-[70vh] items-center overflow-hidden sm:min-h-[80vh]"
         style={{ backgroundColor: THEME_COLORS[currentItem?.id] || "#0F172A" }}
       >
-        {/* Decorative grid pattern */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 opacity-[0.06]"
           style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
             backgroundSize: "50px 50px",
           }}
         />
 
-        {/* Animated content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+
         <AnimatePresence mode="wait">
           <motion.div
             key={currentItem?.id || "empty"}
@@ -189,7 +217,6 @@ export default function PortfolioContent() {
           >
             {currentItem && (
               <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-                {/* Left — text */}
                 <div>
                   <motion.span
                     initial={{ opacity: 0, y: 20 }}
@@ -222,7 +249,7 @@ export default function PortfolioContent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="mt-8 flex flex-wrap items-center gap-4"
+                    className="mt-8 flex flex-wrap items-center gap-3"
                   >
                     {currentItem.results.slice(0, 3).map((r) => (
                       <span
@@ -242,18 +269,19 @@ export default function PortfolioContent() {
                   >
                     <button
                       onClick={() => setSelectedItem(currentItem)}
-                      className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-lg transition-all hover:bg-white/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                      className="group inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-lg transition-all duration-300 hover:bg-white/90 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                     >
+                      <Eye className="size-4" />
                       View Details
-                      <ArrowUpRight className="size-4" />
                     </button>
                     {currentItem.website && (
                       <a
                         href={currentItem.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 underline-offset-4 transition-all hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                       >
+                        <Globe className="size-4" />
                         Visit Website
                         <ArrowUpRight className="size-3.5" />
                       </a>
@@ -261,7 +289,6 @@ export default function PortfolioContent() {
                   </motion.div>
                 </div>
 
-                {/* Right — SVG illustration */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -277,44 +304,42 @@ export default function PortfolioContent() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Carousel controls — bottom */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-4 bg-gradient-to-t from-black/40 to-transparent px-4 pb-8 pt-16">
-          {/* Dots */}
+        {/* Carousel controls */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-6 bg-gradient-to-t from-black/40 to-transparent px-4 pb-8 pt-16">
           <div className="flex items-center gap-2">
             {items.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCarouselIndex(i)}
                 className={cn(
-                  "rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                  "rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                   i === carouselIndex
-                    ? "h-2.5 w-8 bg-white"
-                    : "h-2.5 w-2.5 bg-white/40 hover:bg-white/70",
+                    ? "h-2.5 w-8 bg-white shadow-md"
+                    : "h-2.5 w-2.5 bg-white/30 hover:bg-white/60",
                 )}
                 aria-label={`Go to project ${i + 1}`}
               />
             ))}
           </div>
 
-          {/* Nav buttons */}
-          <div className="ml-4 flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <button
               onClick={handleCarouselPrev}
-              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/25 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label="Previous project"
             >
               <ChevronLeft className="size-4" />
             </button>
             <button
               onClick={handleCarouselNext}
-              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/25 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label="Next project"
             >
               <ChevronRight className="size-4" />
             </button>
             <button
               onClick={() => setCarouselPaused((p) => !p)}
-              className="ml-1 flex size-9 items-center justify-center rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="flex size-10 items-center justify-center rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/25 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={carouselPaused ? "Resume auto-play" : "Pause auto-play"}
             >
               {carouselPaused ? "▶" : "❚❚"}
@@ -324,29 +349,35 @@ export default function PortfolioContent() {
       </section>
 
       {/* ────────────── ALL PROJECTS ────────────── */}
-      <section className="bg-background py-20 sm:py-28">
-        <div className="container px-4">
-          {/* Section header */}
-          <div className="mb-12 text-center">
-            <span className="mb-3 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
+        <div className="container relative z-10 px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+              <Sparkles className="size-3" />
               Our Work
             </span>
-            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               All Projects
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+            <p className="mt-3 text-muted-foreground">
               Browse our complete portfolio across every category.
             </p>
-          </div>
+          </motion.div>
 
           {/* Filter bar */}
-          <div className="mb-10 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-10 mb-12 flex flex-wrap items-center justify-center gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                  "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                   activeFilter === cat
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground",
@@ -357,52 +388,52 @@ export default function PortfolioContent() {
             ))}
           </div>
 
-          {/* Loading state */}
           {loading && (
             <div className="flex justify-center py-20">
               <Loader2 className="size-8 animate-spin text-muted-foreground" />
             </div>
           )}
 
-          {/* Grid */}
           {!loading && (
-            <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              layout
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
               <AnimatePresence mode="popLayout">
-                {filteredItems.map((item, idx) => (
+                {filteredItems.map((item) => (
                   <motion.div
                     key={item.id}
                     layout
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.35, delay: idx * 0.05 }}
+                    variants={cardVariants}
                     className="group cursor-pointer"
                     onClick={() => setSelectedItem(item)}
                   >
-                    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5">
-                      {/* SVG header */}
+                    <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20">
                       <div
                         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden p-8"
                         style={{ backgroundColor: THEME_COLORS[item.id] || "#334155" }}
                       >
-                        <div className="w-full max-w-[200px] opacity-25 transition-all duration-500 group-hover:scale-110 group-hover:opacity-35">
+                        <div className="w-full max-w-[180px] opacity-25 transition-all duration-500 group-hover:scale-110 group-hover:opacity-40">
                           <PortfolioImage id={item.id} />
                         </div>
                         <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                           {item.category}
                         </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                       </div>
 
-                      {/* Card body */}
                       <div className="p-5">
-                        <h3 className="text-lg font-semibold text-card-foreground">
+                        <h3 className="text-lg font-semibold text-card-foreground transition-colors duration-300 group-hover:text-primary">
                           {item.title}
                         </h3>
                         <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
                           {item.description}
                         </p>
 
-                        {/* Result tags */}
                         <div className="mt-4 flex flex-wrap gap-1.5">
                           {item.results.slice(0, 2).map((r) => (
                             <span
@@ -419,9 +450,9 @@ export default function PortfolioContent() {
                           )}
                         </div>
 
-                        <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
+                        <div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
                           View Project
-                          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          <Eye className="size-3.5 transition-all duration-300 group-hover:translate-x-0.5" />
                         </div>
                       </div>
                     </div>
@@ -431,13 +462,16 @@ export default function PortfolioContent() {
             </motion.div>
           )}
 
-          {/* Empty state */}
           {!loading && filteredItems.length === 0 && (
-            <div className="flex flex-col items-center gap-3 py-20 text-center">
-              <Search className="size-12 text-muted-foreground/40" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center gap-3 py-20 text-center"
+            >
+              <Search className="size-12 text-muted-foreground/30" />
               <p className="text-lg font-medium text-foreground">No projects found</p>
               <p className="text-sm text-muted-foreground">Try a different category filter.</p>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
@@ -445,68 +479,104 @@ export default function PortfolioContent() {
       {/* ────────────── DETAIL MODAL ────────────── */}
       <Dialog.Root open={!!selectedItem} onOpenChange={(open) => { if (!open) setSelectedItem(null) }}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-          <Dialog.Content className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[95vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border bg-background p-6 shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:p-8">
+          <Dialog.Overlay
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          />
+          <Dialog.Content
+            className="fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-4xl -translate-x-1/2 -translate-y-1/2 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]"
+          >
             {selectedItem && (
-              <>
-                <Dialog.Close className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground">
+              <div className="relative max-h-[85vh] overflow-y-auto rounded-2xl border border-white/10 bg-background shadow-2xl">
+                {/* Close button */}
+                <Dialog.Close className="absolute right-4 top-4 z-20 flex size-9 items-center justify-center rounded-full bg-background/80 text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:bg-muted hover:text-foreground hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                   <X className="size-4" />
                 </Dialog.Close>
 
+                {/* Header with SVG */}
                 <div
-                  className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl p-8 sm:aspect-[3/1]"
-                  style={{ backgroundColor: THEME_COLORS[selectedItem.id] || "#334155" }}
+                  className="relative flex aspect-[5/2] items-center justify-center overflow-hidden sm:aspect-[4/1]"
+                  style={{ backgroundColor: THEME_COLORS[selectedItem.id] || "#0F172A" }}
                 >
-                  <div className="w-full max-w-[200px] opacity-25 sm:max-w-[260px]">
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px)`,
+                      backgroundSize: "40px 40px",
+                    }}
+                  />
+                  <div className="w-full max-w-[280px] opacity-20 sm:max-w-[360px]">
                     <PortfolioImage id={selectedItem.id} />
                   </div>
-                  <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                  <span className="absolute left-6 top-6 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                     {selectedItem.category}
                   </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 </div>
 
-                <div className="mt-6">
-                  <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{selectedItem.title}</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">Client: {selectedItem.client}</p>
-                  <p className="mt-4 text-muted-foreground">{selectedItem.description}</p>
+                {/* Content */}
+                <div className="p-6 sm:p-8">
+                  <div className="grid gap-8 lg:grid-cols-5">
+                    {/* Left — details */}
+                    <div className="lg:col-span-3">
+                      <h2 className="text-2xl font-bold text-foreground sm:text-3xl">{selectedItem.title}</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">Client: {selectedItem.client}</p>
+                      <p className="mt-4 leading-relaxed text-muted-foreground">{selectedItem.description}</p>
 
-                  <h3 className="mt-6 font-semibold text-foreground">Key Results</h3>
-                  <ul className="mt-3 space-y-2">
-                    {selectedItem.results.map((result) => (
-                      <li key={result} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span className="size-1.5 rounded-full bg-accent" />
-                        {result}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                      <h3 className="mt-8 font-semibold text-foreground">Key Results</h3>
+                      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {selectedItem.results.map((result) => (
+                          <div
+                            key={result}
+                            className="flex items-center gap-3 rounded-xl border border-border/50 bg-muted/30 p-3 text-sm text-muted-foreground transition-all duration-200 hover:border-primary/20 hover:shadow-sm"
+                          >
+                            <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                              ✓
+                            </span>
+                            {result}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  {selectedItem.website && (
-                    <a
-                      href={selectedItem.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
-                    >
-                      Visit Website
-                      <ArrowUpRight className="size-4" />
-                    </a>
-                  )}
-                  {caseStudySlugs.has(selectedItem.id) && (
-                    <Link
-                      href={`/cases/${selectedItem.id}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-                    >
-                      View Full Case Study
-                      <ArrowUpRight className="size-4" />
-                    </Link>
-                  )}
-                  <Dialog.Close className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted">
-                    Close
-                  </Dialog.Close>
+                    {/* Right — actions */}
+                    <div className="lg:col-span-2">
+                      <div className="sticky top-4 space-y-4 rounded-2xl border border-border/50 bg-muted/20 p-6">
+                        <h3 className="font-semibold text-foreground">Quick Actions</h3>
+
+                        {selectedItem.website && (
+                          <a
+                            href={selectedItem.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                          >
+                            <ExternalLink className="size-4" />
+                            Visit Website
+                            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </a>
+                        )}
+
+                        {caseStudySlugs.has(selectedItem.id) && (
+                          <Link
+                            href={`/cases/${selectedItem.id}`}
+                            className="group flex w-full items-center justify-center gap-2.5 rounded-2xl border border-border/50 bg-background px-6 py-3.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5"
+                          >
+                            <Eye className="size-4" />
+                            View Full Case Study
+                            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </Link>
+                        )}
+
+                        <div className="pt-2">
+                          <Dialog.Close className="group flex w-full items-center justify-center gap-2 rounded-2xl border border-border/30 px-6 py-3 text-sm font-medium text-muted-foreground transition-all duration-200 hover:border-border hover:bg-muted/50 hover:text-foreground">
+                            Close
+                          </Dialog.Close>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </>
+              </div>
             )}
           </Dialog.Content>
         </Dialog.Portal>
