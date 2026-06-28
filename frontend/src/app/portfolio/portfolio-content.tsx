@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { X, ArrowUpRight, Search, Loader2 } from "lucide-react"
+import { X, ArrowUpRight, Search, Loader2, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
 import * as Dialog from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
@@ -108,6 +108,26 @@ export default function PortfolioContent() {
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
   const [items, setItems] = useState<PortfolioItem[]>(hardcodedPortfolio)
   const [loading, setLoading] = useState(true)
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [carouselPaused, setCarouselPaused] = useState(false)
+
+  const handleCarouselNext = useCallback(() => {
+    setCarouselIndex((i) => (i + 1) % items.length)
+  }, [items.length])
+
+  const handleCarouselPrev = useCallback(() => {
+    setCarouselIndex((i) => (i - 1 + items.length) % items.length)
+  }, [items.length])
+
+  useEffect(() => {
+    if (carouselIndex >= items.length) setCarouselIndex(0)
+  }, [items.length, carouselIndex])
+
+  useEffect(() => {
+    if (carouselPaused || items.length < 2) return
+    const id = setInterval(handleCarouselNext, 5000)
+    return () => clearInterval(id)
+  }, [carouselPaused, items.length, handleCarouselNext])
 
   useEffect(() => {
     fetch("/api/portfolio")
@@ -184,6 +204,126 @@ export default function PortfolioContent() {
                 {cat}
               </button>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Auto Carousel — one project at a time */}
+      <section className="bg-background pb-2">
+        <div className="container px-4">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={items[carouselIndex]?.id || "empty"}
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -60 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="flex flex-col md:flex-row"
+              >
+                {/* SVG side */}
+                {items[carouselIndex] && (
+                  <div
+                    className="flex min-h-[260px] items-center justify-center md:w-2/5"
+                    style={{ backgroundColor: THEME_COLORS[items[carouselIndex].id] || "#334155" }}
+                  >
+                    <div className="w-4/5 max-w-[280px] opacity-25">
+                      <PortfolioImage id={items[carouselIndex].id} />
+                    </div>
+                  </div>
+                )}
+
+                {/* Content side */}
+                {items[carouselIndex] && (
+                  <div className="flex flex-1 flex-col justify-center p-6 sm:p-8 lg:p-10">
+                    <span className="mb-2 inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                      {items[carouselIndex].category}
+                    </span>
+                    <h3 className="text-2xl font-bold text-foreground sm:text-3xl">
+                      {items[carouselIndex].title}
+                    </h3>
+                    <p className="mt-3 max-w-xl text-muted-foreground">
+                      {items[carouselIndex].description}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {items[carouselIndex].results.slice(0, 3).map((r) => (
+                        <span key={r} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+                          {r}
+                        </span>
+                      ))}
+                      {items[carouselIndex].results.length > 3 && (
+                        <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+                          +{items[carouselIndex].results.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-6 flex items-center gap-4">
+                      <button
+                        onClick={() => setSelectedItem(items[carouselIndex])}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        View Details
+                        <ArrowUpRight className="size-4" />
+                      </button>
+                      {items[carouselIndex].website && (
+                        <a
+                          href={items[carouselIndex].website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                        >
+                          Visit Website
+                          <ArrowUpRight className="size-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Controls overlay */}
+            <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-2 border-t border-border bg-background/80 px-4 py-3 backdrop-blur-sm">
+              <div className="flex items-center gap-1.5">
+                {items.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCarouselIndex(i)}
+                    className={cn(
+                      "size-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+                      i === carouselIndex
+                        ? "w-6 bg-primary"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50",
+                    )}
+                    aria-label={`Go to project ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setCarouselPaused((p) => !p)}
+                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                  aria-label={carouselPaused ? "Resume auto-play" : "Pause auto-play"}
+                >
+                  {carouselPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
+                </button>
+                <button
+                  onClick={handleCarouselPrev}
+                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                  aria-label="Previous project"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+                <button
+                  onClick={handleCarouselNext}
+                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                  aria-label="Next project"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
