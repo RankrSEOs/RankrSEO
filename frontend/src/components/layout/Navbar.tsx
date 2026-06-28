@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, Sun, Moon, Search, BarChart3 } from "lucide-react"
+import { Menu, X, ChevronDown, Sun, Moon, Search, BarChart3, Sparkles } from "lucide-react"
 import { useTheme } from "@/components/layout/ThemeProvider"
 import { servicesData } from "@/lib/utils"
 import { cn } from "@/lib/utils"
@@ -24,7 +24,7 @@ const drawerVariants = {
 }
 
 const dropdownVariants = {
-  hidden: { opacity: 0, y: -4, pointerEvents: "none" as const },
+  hidden: { opacity: 0, y: -6, pointerEvents: "none" as const },
   visible: { opacity: 1, y: 0, pointerEvents: "auto" as const },
 }
 
@@ -52,15 +52,18 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           scrolled
-            ? "bg-background/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-border/50"
+            ? "glass-lg shadow-xl shadow-black/5 border-b border-white/10"
             : "bg-transparent"
         )}
       >
         <div className="container flex h-16 sm:h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo.svg" alt="RankrSEO" className="h-9 w-auto" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="relative">
+              <img src="/logo.svg" alt="RankrSEO" className="h-9 w-auto transition-transform duration-300 group-hover:scale-105" />
+              <div className="absolute -inset-2 rounded-full bg-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 blur-lg" />
+            </div>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -74,38 +77,42 @@ export default function Navbar() {
                     onMouseLeave={() => setServicesOpen(false)}
                   >
                     <button
-                      className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      className={cn(
+                        "flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
+                        "hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                        scrolled ? "text-foreground/70" : "text-white/80 hover:text-white"
+                      )}
                       aria-expanded={servicesOpen}
                       aria-haspopup="true"
                     >
                       {link.label}
-                      <ChevronDown className={cn("size-3.5 transition-transform duration-200", servicesOpen && "rotate-180")} />
+                      <ChevronDown className={cn("size-3.5 transition-all duration-300", servicesOpen && "rotate-180")} />
                     </button>
                     <AnimatePresence>
                       {servicesOpen && (
                         <motion.div
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl border border-border/60 bg-popover/95 backdrop-blur-xl p-2 shadow-2xl"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-2xl p-2 shadow-2xl shadow-primary/5"
                           variants={dropdownVariants}
                           initial="hidden"
                           animate="visible"
                           exit="hidden"
-                          transition={{ duration: 0.15 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
                         >
                           {servicesData.map((service) => (
                             <Link
                               key={service.id}
                               href={service.href}
-                              className="flex items-start gap-3 rounded-xl px-4 py-3 text-sm transition-colors hover:bg-muted group"
+                              className="group/link flex items-start gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-200 hover:bg-primary/5"
                             >
                               <div className="shrink-0 mt-0.5">
-                                <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                  <span className="text-xs font-bold text-primary group-hover:text-primary-foreground">
+                                <div className="size-9 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center group-hover/link:from-primary group-hover/link:to-accent transition-all duration-300">
+                                  <span className="text-xs font-bold text-primary group-hover/link:text-white transition-colors duration-300">
                                     {service.shortTitle?.slice(0, 2)}
                                   </span>
                                 </div>
                               </div>
                               <div>
-                                <div className="font-medium text-foreground group-hover:text-primary transition-colors">{service.title}</div>
+                                <div className="font-medium text-foreground group-hover/link:text-primary transition-colors">{service.title}</div>
                                 <div className="text-xs text-muted-foreground line-clamp-1">{service.outcome}</div>
                               </div>
                             </Link>
@@ -120,7 +127,11 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  className={cn(
+                    "rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
+                    "hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                    scrolled ? "text-foreground/70" : "text-white/80 hover:text-white"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -131,15 +142,20 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAuditOpen(true)}
-              className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary/90 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
-              <Search className="size-4" />
+              <Sparkles className="size-4" />
               Free SEO Audit
             </button>
 
             <button
               onClick={toggleTheme}
-              className="flex size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className={cn(
+                "flex size-9 items-center justify-center rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                scrolled
+                  ? "text-foreground/70 hover:bg-muted hover:text-foreground"
+                  : "text-white/70 hover:bg-white/10 hover:text-white"
+              )}
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
@@ -147,7 +163,12 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileOpen(true)}
-              className="flex lg:hidden size-9 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className={cn(
+                "flex lg:hidden size-9 items-center justify-center rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                scrolled
+                  ? "text-foreground/70 hover:bg-muted"
+                  : "text-white/70 hover:bg-white/10 hover:text-white"
+              )}
               aria-label="Open menu"
             >
               <Menu className="size-5" />
@@ -159,25 +180,25 @@ export default function Navbar() {
           {mobileOpen && (
             <>
               <motion.div
-                className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setMobileOpen(false)}
               />
               <motion.div
-                className="fixed top-0 right-0 bottom-0 z-50 flex w-80 flex-col bg-background shadow-2xl"
+                className="fixed top-0 right-0 bottom-0 z-50 flex w-80 flex-col border-l border-white/10 bg-background/95 backdrop-blur-2xl shadow-2xl"
                 variants={drawerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                transition={{ type: "spring", damping: 30, stiffness: 250 }}
               >
-                <div className="flex items-center justify-between border-b border-border px-5 h-16">
+                <div className="flex items-center justify-between border-b border-border/50 px-5 h-16">
                   <img src="/logo.svg" alt="RankrSEO" className="h-8 w-auto" />
                   <button
                     onClick={() => setMobileOpen(false)}
-                    className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="flex size-9 items-center justify-center rounded-xl transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                     aria-label="Close menu"
                   >
                     <X className="size-5" />
@@ -191,10 +212,10 @@ export default function Navbar() {
                         <div key={link.label}>
                           <button
                             onClick={() => setMobileServicesOpen((prev) => !prev)}
-                            className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
+                            className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-primary/5"
                           >
                             {link.label}
-                            <ChevronDown className={cn("size-4 transition-transform duration-200", mobileServicesOpen && "rotate-180")} />
+                            <ChevronDown className={cn("size-4 transition-transform duration-300", mobileServicesOpen && "rotate-180")} />
                           </button>
                           <AnimatePresence>
                             {mobileServicesOpen && (
@@ -203,14 +224,14 @@ export default function Navbar() {
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
+                                transition={{ duration: 0.25 }}
                               >
                                 {servicesData.map((service) => (
                                   <Link
                                     key={service.id}
                                     href={service.href}
                                     onClick={() => setMobileOpen(false)}
-                                    className="block rounded-lg px-3 py-2.5 text-sm text-foreground/70 transition-colors hover:bg-muted hover:text-foreground"
+                                    className="block rounded-xl px-3 py-2.5 text-sm text-foreground/70 transition-colors hover:bg-primary/5 hover:text-foreground"
                                   >
                                     {service.title}
                                   </Link>
@@ -226,27 +247,27 @@ export default function Navbar() {
                         key={link.label}
                         href={link.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block rounded-lg px-3 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
+                        className="block rounded-xl px-3 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-primary/5"
                       >
                         {link.label}
                       </Link>
                     )
                   })}
 
-                  <hr className="my-4 border-border" />
+                  <hr className="my-4 border-border/50" />
 
                   <button
                     onClick={() => { setMobileOpen(false); setAuditOpen(true) }}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary/90 px-4 py-3 text-sm font-medium text-white shadow-lg shadow-primary/20 transition-all hover:shadow-xl"
                   >
-                    <BarChart3 className="size-4" />
+                    <Sparkles className="size-4" />
                     Get Free SEO Audit
                   </button>
 
                   <Link
                     href="/contact"
                     onClick={() => setMobileOpen(false)}
-                    className="flex w-full items-center justify-center rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted mt-2"
+                    className="flex w-full items-center justify-center rounded-xl border border-border/50 px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted mt-2"
                   >
                     Contact Us
                   </Link>

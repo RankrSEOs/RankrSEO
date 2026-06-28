@@ -233,11 +233,42 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+@utility glass-sm {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 @utility glass-card {
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@utility glass-lg {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.dark @utility glass {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.dark @utility glass-sm {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+.dark @utility glass-card {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+.dark @utility glass-lg {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 @utility gradient-text {
@@ -267,14 +298,47 @@
   background: linear-gradient(180deg, var(--background) 0%, rgba(59, 130, 246, 0.05) 50%, var(--background) 100%);
 }
 
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--primary), var(--accent), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@utility glow-primary {
+  box-shadow: 0 0 24px rgba(37, 99, 235, 0.15), 0 0 80px rgba(37, 99, 235, 0.06);
+}
+
+@utility glow-accent {
+  box-shadow: 0 0 24px rgba(20, 184, 166, 0.15), 0 0 80px rgba(20, 184, 166, 0.06);
+}
+
+@utility glow-lg {
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.12), 0 0 120px rgba(37, 99, 235, 0.04);
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
 }
 
 @keyframes slide-up {
@@ -287,10 +351,26 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
 @utility animate-float { animation: float 6s ease-in-out infinite; }
+@utility animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
 @utility animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
 @utility animate-slide-up { animation: slide-up 0.6s ease-out; }
 @utility animate-scale-in { animation: scale-in 0.4s ease-out; }
+@utility animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+@utility animate-breathe { animation: breathe 4s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

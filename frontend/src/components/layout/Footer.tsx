@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Mail, Phone, MapPin, MessageCircle, ArrowUpRight } from "lucide-react"
+import { Mail, Phone, MapPin, MessageCircle, ArrowUpRight, Sparkles } from "lucide-react"
 import { servicesData, socialLinks, siteConfig } from "@/lib/utils"
 
 const quickLinks = [
@@ -14,7 +14,12 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-border/50 bg-secondary/95">
+    <footer className="relative overflow-hidden border-t border-white/5 bg-gradient-to-br from-secondary via-secondary to-primary/5">
+      {/* Background decoration */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 -left-40 size-96 rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute -bottom-40 -right-40 size-96 rounded-full bg-accent/5 blur-[120px]" />
+      </div>
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: `radial-gradient(circle at 30% 40%, white 1px, transparent 1px)`,
         backgroundSize: "40px 40px",
@@ -22,37 +27,39 @@ export default function Footer() {
 
       <div className="container relative z-10 px-4 py-16 sm:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="text-2xl font-bold">
-              <span className="gradient-text">{siteConfig.name}</span>
+            <Link href="/" className="inline-flex items-center gap-2 group">
+              <img src="/logo-white.svg" alt="RankrSEO" className="h-9 w-auto" />
+              <Sparkles className="size-4 text-accent opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </Link>
-            <p className="mt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
+            <p className="mt-1 text-xs font-medium uppercase tracking-widest text-white/30">
               {siteConfig.tagline}
             </p>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/50">
               {siteConfig.description}
             </p>
             <div className="mt-6 space-y-3">
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <a href={`mailto:${siteConfig.email}`} className="group/contact flex items-center gap-3 text-sm text-white/50 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
+                <div className="flex size-9 items-center justify-center rounded-xl bg-white/5 text-white/50 transition-all duration-300 group-hover/contact:bg-primary/20 group-hover/contact:text-primary">
                   <Mail className="size-4" />
                 </div>
                 {siteConfig.email}
               </a>
-              <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <a href={`tel:${siteConfig.phone}`} className="group/contact flex items-center gap-3 text-sm text-white/50 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
+                <div className="flex size-9 items-center justify-center rounded-xl bg-white/5 text-white/50 transition-all duration-300 group-hover/contact:bg-primary/20 group-hover/contact:text-primary">
                   <Phone className="size-4" />
                 </div>
                 {siteConfig.phoneDisplay}
               </a>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div className="flex items-center gap-3 text-sm text-white/50">
+                <div className="flex size-9 items-center justify-center rounded-xl bg-white/5 text-white/50">
                   <MapPin className="size-4" />
                 </div>
                 {siteConfig.address}
               </div>
-              <a href={`https://wa.me/${siteConfig.wa}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-colors">
+              <a href={`https://wa.me/${siteConfig.wa}`} target="_blank" rel="noopener noreferrer" className="group/contact flex items-center gap-3 text-sm text-white/50 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
+                <div className="flex size-9 items-center justify-center rounded-xl bg-white/5 text-accent transition-all duration-300 group-hover/contact:bg-accent/20 group-hover/contact:text-accent">
                   <MessageCircle className="size-4" />
                 </div>
                 Chat on WhatsApp
@@ -60,26 +67,28 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">Quick Links</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">Quick Links</h3>
             <ul className="mt-4 space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground flex items-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
+                  <Link href={link.href} className="group/link inline-flex items-center gap-1.5 text-sm text-white/50 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
                     {link.label}
-                    <ArrowUpRight className="size-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
+                    <ArrowUpRight className="size-3 opacity-0 -translate-y-1 group-hover/link:opacity-100 group-hover/link:translate-y-0 transition-all" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Services */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">Services</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">Services</h3>
             <ul className="mt-4 space-y-2.5">
               {servicesData.slice(0, 6).map((service) => (
                 <li key={service.id}>
-                  <Link href={service.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
+                  <Link href={service.href} className="text-sm text-white/50 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
                     {service.title}
                   </Link>
                 </li>
@@ -87,8 +96,9 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Social & Copyright */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">Follow Us</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">Follow Us</h3>
             <div className="mt-4 flex flex-wrap gap-3">
               {socialLinks.map((link) => (
                 <a
@@ -96,14 +106,14 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex size-10 items-center justify-center rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary/10 hover:text-primary hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/40 transition-all duration-300 hover:border-accent/30 hover:bg-accent/10 hover:text-accent hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                   aria-label={link.label}
                 >
                   <SocialIcon icon={link.icon} />
                 </a>
               ))}
             </div>
-            <p className="mt-4 text-xs text-muted-foreground/60">
+            <p className="mt-6 text-xs text-white/30">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>
           </div>
