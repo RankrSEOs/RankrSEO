@@ -1,20 +1,13 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://rankrseo.onrender.com/api"
 
 const GRADIENT_MAP: Record<string, string> = {
-  "techflow-seo": "from-blue-600 to-cyan-500",
-  "greenleaf-web": "from-emerald-600 to-teal-500",
-  "brickhouse-local": "from-amber-600 to-orange-500",
-  "quantum-ppc": "from-violet-600 to-purple-500",
-  "sprout-content": "from-pink-600 to-rose-500",
-  "nexus-seo": "from-indigo-600 to-blue-500",
-  "urban-web": "from-sky-600 to-blue-500",
-  "peak-local": "from-red-600 to-rose-500",
-  "guru": "from-purple-600 to-pink-500",
-  "scrapco": "from-green-600 to-emerald-500",
+  "excompany": "from-slate-600 to-gray-500",
   "zubilo-studio": "from-orange-600 to-red-500",
+  "scrapco": "from-green-600 to-emerald-500",
   "ezdry": "from-blue-600 to-cyan-500",
   "pogotunes": "from-yellow-500 to-orange-500",
-  "excompany": "from-slate-600 to-gray-500",
+  "saferaahia": "from-purple-600 to-pink-500",
+  "rankrseo": "from-primary to-accent",
 }
 
 export interface CaseStudyItem {
@@ -29,7 +22,7 @@ export interface TestimonialItem {
 
 export interface PortfolioItem {
   id: string; title: string; category: string; description: string
-  client: string; results: string[]; gradient: string
+  client: string; results: string[]; gradient: string; website?: string
 }
 
 export interface CaseStudyDetail {
@@ -107,7 +100,7 @@ export async function fetchAllTestimonials(): Promise<TestimonialItem[]> {
 
 type ApiPortfolio = {
   slug: string; title: string; category?: string; description?: string
-  clientName?: string; tags?: string[]
+  clientName?: string; tags?: string[]; liveUrl?: string
 }
 
 export async function fetchPortfolioItems(): Promise<PortfolioItem[]> {
@@ -120,6 +113,7 @@ export async function fetchPortfolioItems(): Promise<PortfolioItem[]> {
     client: p.clientName || "",
     results: p.tags || [],
     gradient: GRADIENT_MAP[p.slug] || "from-primary to-secondary",
+    website: p.liveUrl || undefined,
   }))
 }
 

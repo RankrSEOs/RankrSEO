@@ -16,155 +16,79 @@ interface PortfolioItem {
   client: string
   results: string[]
   gradient: string
+  website?: string
 }
 
 const GRADIENT_MAP: Record<string, string> = {
-  "techflow-seo": "from-blue-600 to-cyan-500",
-  "greenleaf-web": "from-emerald-600 to-teal-500",
-  "brickhouse-local": "from-amber-600 to-orange-500",
-  "quantum-ppc": "from-violet-600 to-purple-500",
-  "sprout-content": "from-pink-600 to-rose-500",
-  "nexus-seo": "from-indigo-600 to-blue-500",
-  "urban-web": "from-sky-600 to-blue-500",
-  "peak-local": "from-red-600 to-rose-500",
-  "guru": "from-purple-600 to-pink-500",
-  "scrapco": "from-green-600 to-emerald-500",
+  "excompany": "from-slate-600 to-gray-500",
   "zubilo-studio": "from-orange-600 to-red-500",
+  "scrapco": "from-green-600 to-emerald-500",
   "ezdry": "from-blue-600 to-cyan-500",
   "pogotunes": "from-yellow-500 to-orange-500",
-  "excompany": "from-slate-600 to-gray-500",
+  "saferaahia": "from-purple-600 to-pink-500",
+  "rankrseo": "from-primary to-accent",
 }
 
 const hardcodedPortfolio: PortfolioItem[] = [
   {
-    id: "techflow-seo",
-    title: "TechFlow SaaS",
-    category: "SEO",
-    description: "Increased organic traffic by 340% for a B2B SaaS company through comprehensive technical SEO and content strategy.",
-    client: "TechFlow Inc.",
-    results: ["+340% Organic Traffic", "Top 5 for 47 Keywords", "150% ROI in 6 months"],
-    gradient: "from-blue-600 to-cyan-500",
-  },
-  {
-    id: "greenleaf-web",
-    title: "GreenLeaf Organics",
-    category: "Web Design",
-    description: "Designed a modern, conversion-optimized e-commerce store that increased sales by 28% within the first quarter.",
-    client: "GreenLeaf Organics",
-    results: ["+28% Conversion Rate", "42% Lower Bounce Rate", "A+ Accessibility Score"],
-    gradient: "from-emerald-600 to-teal-500",
-  },
-  {
-    id: "brickhouse-local",
-    title: "BrickHouse Realty",
-    category: "Local SEO",
-    description: "Dominated local search for a real estate agency, achieving #1 in Google Local Pack for 12 high-value terms.",
-    client: "BrickHouse Realty",
-    results: ["#1 in Local Pack (12 terms)", "+280% Leads from Google", "4.9★ Average Rating"],
-    gradient: "from-amber-600 to-orange-500",
-  },
-  {
-    id: "quantum-ppc",
-    title: "Quantum Finance",
-    category: "PPC",
-    description: "Optimized Google Ads campaigns for a fintech startup, reducing CPA by 55% while scaling spend 3x.",
-    client: "Quantum Finance",
-    results: ["-55% Cost Per Acquisition", "3.2x ROAS", "12K+ Qualified Leads"],
-    gradient: "from-violet-600 to-purple-500",
-  },
-  {
-    id: "sprout-content",
-    title: "Sprout Health",
-    category: "Content Marketing",
-    description: "Built a content engine that positioned Sprout Health as the authority in wellness, driving 200K monthly visitors.",
-    client: "Sprout Health",
-    results: ["200K Monthly Visitors", "450+ Keywords in Top 10", "8.5K Email Subscribers"],
-    gradient: "from-pink-600 to-rose-500",
-  },
-  {
-    id: "nexus-seo",
-    title: "Nexus Enterprise",
-    category: "SEO",
-    description: "Enterprise-level SEO for a logistics company spanning 14 countries, achieving 180% organic growth.",
-    client: "Nexus Enterprise",
-    results: ["+180% Global Traffic", "#1 for 28 Country-Specific Terms", "3.2M Impressions/Month"],
-    gradient: "from-indigo-600 to-blue-500",
-  },
-  {
-    id: "urban-web",
-    title: "UrbanCart",
-    category: "Web Design",
-    description: "Full redesign and development of a marketplace platform with focus on UX and mobile-first experience.",
-    client: "UrbanCart",
-    results: ["+65% Mobile Conversion", "94 PageSpeed Score", "Zero CLS"],
-    gradient: "from-sky-600 to-blue-500",
-  },
-  {
-    id: "peak-local",
-    title: "Peak Fitness",
-    category: "Local SEO",
-    description: "Multi-location local SEO strategy for a fitness chain, driving foot traffic across 8 branches.",
-    client: "Peak Fitness",
-    results: ["+190% Direction Requests", "#1 for 23 Location Terms", "8 GBP Optimized"],
-    gradient: "from-red-600 to-rose-500",
-  },
-  {
-    id: "guru",
-    title: "Gurutron",
-    category: "Web Design",
-    description: "Built a modern NEET/JEE/Board exam preparation platform with intuitive UI/UX, responsive design, and seamless student experience.",
-    client: "Gurutron",
-    results: ["NEET/JEE/Board Prep Platform", "Modern UI/UX Design", "Student-First Experience"],
-    gradient: "from-purple-600 to-pink-500",
-  },
-  {
-    id: "scrapco",
-    title: "ScrapCo",
-    category: "Web Design",
-    description: "Designed and developed a scrap pickup marketplace connecting households, shops, and factories with verified vendors across multiple cities.",
-    client: "ScrapCo",
-    results: ["Scrap Pickup Marketplace", "4.9★ Rating", "Multi-City Operations"],
-    gradient: "from-green-600 to-emerald-500",
-  },
-  {
-    id: "zubilo-studio",
-    title: "Zubilo Studio",
-    category: "Web Design",
-    description: "Created a brand-first creative studio website with custom animations, bold visuals, and a strong portfolio showcase.",
-    client: "Zubilo Studio",
-    results: ["Creative Studio Website", "Custom Animations", "Brand-First Design"],
-    gradient: "from-orange-600 to-red-500",
-  },
-  {
-    id: "ezdry",
-    title: "EZDRY",
-    category: "Web Design",
-    description: "Built a laundry service platform with online booking, location-based service areas, and real-time order tracking.",
-    client: "EZDRY",
-    results: ["Laundry Service Platform", "Online Booking System", "Location-Based Service"],
-    gradient: "from-blue-600 to-cyan-500",
-  },
-  {
-    id: "pogotunes",
-    title: "PogoTunes",
-    category: "Web Design",
-    description: "Designed a fun, ad-free kids' learning platform featuring 500+ educational videos, 50+ interactive games, and multi-language content.",
-    client: "PogoTunes",
-    results: ["500+ Educational Videos", "50+ Interactive Games", "100% Free & Ad-Free"],
-    gradient: "from-yellow-500 to-orange-500",
-  },
-  {
-    id: "excompany",
-    title: "ExCompany",
-    category: "Web Design",
-    description: "Developed a professional corporate website for a business consulting firm with clean typography, structured layouts, and strong branding.",
+    id: "excompany", title: "ExCompany", category: "Corporate",
+    description: "Developed a professional corporate website for a business consulting firm — full SEO, performance optimization, and ongoing search visibility management.",
     client: "ExCompany",
-    results: ["Corporate Website", "Professional Branding", "Multi-Page Platform"],
+    results: ["Website Development", "Technical SEO", "On Page SEO", "Performance Optimization", "Search Visibility Improvements"],
     gradient: "from-slate-600 to-gray-500",
+    website: "https://www.excompany.in/",
+  },
+  {
+    id: "zubilo-studio", title: "Zubilo Studio", category: "Web Design",
+    description: "Built a brand-first creative studio website with custom animations, bold visuals, SEO strategy, and technical content optimization.",
+    client: "Zubilo Studio",
+    results: ["Website Development", "SEO Strategy", "Technical SEO", "Content Optimization", "Search Engine Visibility"],
+    gradient: "from-orange-600 to-red-500",
+    website: "https://www.zubilo.studio/",
+  },
+  {
+    id: "scrapco", title: "ScrapCo", category: "Web Development",
+    description: "Designed and developed a scrap pickup marketplace connecting households, shops, and factories with verified vendors — with full technical SEO and architecture planning.",
+    client: "ScrapCo",
+    results: ["Product Website Development", "Technical SEO", "Search Optimization", "Website Architecture Planning", "Performance Improvements"],
+    gradient: "from-green-600 to-emerald-500",
+    website: "https://www.scrapco.app/",
+  },
+  {
+    id: "ezdry", title: "EZ Dry", category: "Web Design",
+    description: "Built a laundry service platform with online booking, location-based service areas, local SEO, and business visibility optimization.",
+    client: "EZ Dry",
+    results: ["Website Design", "Website Development", "Local SEO", "Technical SEO", "Business Visibility Optimization"],
+    gradient: "from-blue-600 to-cyan-500",
+    website: "https://www.ezdry.in/",
+  },
+  {
+    id: "pogotunes", title: "PogoTunes", category: "Web Development",
+    description: "Designed a fun kids' learning platform with 500+ educational videos, 50+ interactive games, UI/UX design, and SEO foundation setup.",
+    client: "PogoTunes",
+    results: ["Website Development", "UI/UX Design", "Technical Optimization", "SEO Foundation Setup", "Multi-Language Content"],
+    gradient: "from-yellow-500 to-orange-500",
+    website: "https://pogotunes.vercel.app/",
+  },
+  {
+    id: "saferaahia", title: "Safe Raahia", category: "Web Development",
+    description: "Developed a social initiative safety website with performance optimization, technical SEO, and content structure planning.",
+    client: "Safe Raahia",
+    results: ["Website Development", "Performance Optimization", "Technical SEO", "Content Structure Planning", "Social Initiative"],
+    gradient: "from-purple-600 to-pink-500",
+    website: "https://saferaahia.netlify.app/",
+  },
+  {
+    id: "rankrseo", title: "RankrSEO", category: "Full Service",
+    description: "Complete agency website — design, development, SEO strategy, branding, UI/UX, and conversion optimization for RankrSEO itself.",
+    client: "RankrSEO",
+    results: ["Complete Design & Development", "SEO Strategy", "Content Strategy", "Branding & UI/UX", "Conversion Optimization"],
+    gradient: "from-primary to-accent",
+    website: "https://rankrseo.vercel.app/",
   },
 ]
 
-const categories = ["All", "SEO", "Web Design", "Local SEO", "PPC", "Content Marketing"]
+const categories = ["All", "Web Design", "Web Development", "Full Service", "Corporate"]
 
 const caseStudySlugs = new Set(["techflow-seo", "greenleaf-web", "brickhouse-local"])
 
@@ -187,6 +111,7 @@ export default function PortfolioPage() {
             client: (p.clientName || "") as string,
             results: (p.tags || []) as string[],
             gradient: GRADIENT_MAP[p.slug as string] || "from-primary to-secondary",
+            website: (p.liveUrl as string) || undefined,
           })))
         }
       })
@@ -284,7 +209,7 @@ export default function PortfolioPage() {
                       <h3 className="text-lg font-semibold text-card-foreground">{item.title}</h3>
                       <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
                       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
-                        View Case Study
+                        View Project
                         <ArrowUpRight className="size-3.5" />
                       </div>
                     </div>
@@ -339,10 +264,21 @@ export default function PortfolioPage() {
                 </div>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  {selectedItem.website && (
+                    <a
+                      href={selectedItem.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+                    >
+                      Visit Website
+                      <ArrowUpRight className="size-4" />
+                    </a>
+                  )}
                   {caseStudySlugs.has(selectedItem.id) && (
                     <Link
                       href={`/cases/${selectedItem.id}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                     >
                       View Full Case Study
                       <ArrowUpRight className="size-4" />

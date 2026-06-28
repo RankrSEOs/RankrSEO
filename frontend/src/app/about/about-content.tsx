@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Target, Eye, Heart, ArrowRight, Quote } from "lucide-react"
+import { Target, Eye, Heart, ArrowRight, ArrowUpRight, Quote } from "lucide-react"
 import Link from "next/link"
 import ProcessSection from "@/components/home/ProcessSection"
 import { cn } from "@/lib/utils"
@@ -207,6 +207,75 @@ export default function AboutContent() {
                 </p>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Real Projects */}
+      <section className="bg-background py-20 sm:py-28">
+        <div className="container px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-2xl text-center"
+          >
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Real Projects We've Built
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              We don't just talk about SEO — we design, develop, and optimize real websites for real businesses
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {[
+              { name: "ExCompany", url: "https://www.excompany.in/", tag: "Corporate" },
+              { name: "Zubilo Studio", url: "https://www.zubilo.studio/", tag: "Web Design" },
+              { name: "ScrapCo", url: "https://www.scrapco.app/", tag: "Web Dev" },
+              { name: "EZ Dry", url: "https://www.ezdry.in/", tag: "Web Design" },
+              { name: "PogoTunes", url: "https://pogotunes.vercel.app/", tag: "Web Dev" },
+              { name: "Safe Raahia", url: "https://saferaahia.netlify.app/", tag: "Web Dev" },
+              { name: "RankrSEO", url: "https://rankrseo.vercel.app/", tag: "Full Service" },
+            ].map((project) => (
+              <a
+                key={project.name}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary/5"
+              >
+                <div>
+                  <p className="font-semibold text-card-foreground group-hover:text-primary transition-colors">
+                    {project.name}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{project.tag}</p>
+                </div>
+                <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </a>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-8 text-center"
+          >
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+            >
+              View Full Portfolio <ArrowUpRight className="size-3.5" />
+            </Link>
           </motion.div>
         </div>
       </section>

@@ -40,13 +40,13 @@ export const metadata: Metadata = {
     description:
       "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar. Serving clients in USA, UK, Canada, Australia & India.",
     url: "https://rankrseo.com",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.png", width: 310, height: 320 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "RankrSEO - Digital Marketing Agency",
     description: "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://rankrseo.com" },
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico", sizes: "any" }],
-    apple: "/favicon.svg",
+    icon: [{ url: "/favicon.jpg", type: "image/jpeg" }, { url: "/favicon.ico", sizes: "any" }],
+    apple: "/favicon.jpg",
   },
 }
 
