@@ -1,10 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react"
-import { testimonials } from "@/lib/utils"
+import { Star, Quote, ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import { testimonials as hardcodedTestimonials } from "@/lib/utils"
 import { cn } from "@/lib/utils"
+
+interface TestimonialItem {
+  name: string; role: string; content: string; rating: number
+}
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -22,14 +26,31 @@ function StarRating({ rating }: { rating: number }) {
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [items, setItems] = useState<TestimonialItem[]>(hardcodedTestimonials)
+
+  useEffect(() => {
+    fetch("/api/testimonials?featured=true")
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data?.length) {
+          setItems(data.map((t: Record<string, unknown>) => ({
+            name: t.clientName as string,
+            role: [t.position, t.company].filter(Boolean).join(", "),
+            content: t.content as string,
+            rating: (t.rating || 5) as number,
+          })))
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const next = () => {
     setDirection(1)
-    setCurrent((prev) => (prev + 1) % testimonials.length)
+    setCurrent((prev) => (prev + 1) % items.length)
   }
   const prev = () => {
     setDirection(-1)
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    setCurrent((prev) => (prev - 1 + items.length) % items.length)
   }
 
   const variants = {
@@ -71,14 +92,14 @@ export default function TestimonialsSection() {
               >
                 <Quote className="size-8 text-primary/20 mb-4" />
                 <p className="text-base leading-relaxed text-card-foreground sm:text-lg">
-                  &ldquo;{testimonials[current].content}&rdquo;
+                  &ldquo;{items[current].content}&rdquo;
                 </p>
                 <div className="mt-6 flex items-center justify-between">
                   <div>
-                    <p className="font-semibold text-foreground">{testimonials[current].name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonials[current].role}</p>
+                    <p className="font-semibold text-foreground">{items[current].name}</p>
+                    <p className="text-sm text-muted-foreground">{items[current].role}</p>
                   </div>
-                  <StarRating rating={testimonials[current].rating} />
+                  <StarRating rating={items[current].rating} />
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -93,7 +114,7 @@ export default function TestimonialsSection() {
               <ChevronLeft className="size-5" />
             </button>
             <div className="flex gap-2">
-              {testimonials.map((_, i) => (
+              {items.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i) }}

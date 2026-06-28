@@ -1,10 +1,12 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { TrendingUp, Users, Star, ArrowRight, BarChart3 } from "lucide-react"
+import { TrendingUp, Users, Star, ArrowRight, BarChart3, Loader2 } from "lucide-react"
 import Link from "next/link"
-import { caseStudies } from "@/lib/utils"
+import { caseStudies as hardcodedCases } from "@/lib/utils"
 import { cn } from "@/lib/utils"
+import type { CaseStudyItem } from "@/lib/public-api"
 
 function GrowthBar({ label, before, after }: { label: string; before: number; after: number }) {
   return (
@@ -38,6 +40,34 @@ const cardVariants = {
 }
 
 export default function CaseStudiesSection() {
+  const [items, setItems] = useState<CaseStudyItem[]>(hardcodedCases)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch("/api/cases?published=true")
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data?.length) setItems(data.map((ac: Record<string, unknown>) => {
+          const m = (ac.metrics || {}) as Record<string, unknown>
+          return {
+            id: (ac.slug || ac.id) as string,
+            title: ac.title as string,
+            industry: (ac.clientIndustry || "") as string,
+            challenge: (ac.problem || "") as string,
+            solution: (ac.strategy || "") as string,
+            resultTraffic: (m.traffic || "") as string,
+            resultLeads: (m.leads || "") as string,
+            resultRankings: (m.rankings || "") as string,
+            timeframe: (m.timeframe || "") as string,
+            metricBefore: (m.metricBefore || 0) as number,
+            metricAfter: (m.metricAfter || 0) as number,
+          }
+        }))
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
   return (
     <section className="py-24 sm:py-32">
       <div className="container px-4">
@@ -58,6 +88,12 @@ export default function CaseStudiesSection() {
           </p>
         </motion.div>
 
+        {loading && (
+          <div className="mt-14 flex justify-center">
+            <Loader2 className="size-8 animate-spin text-muted-foreground" />
+          </div>
+        )}
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -65,7 +101,7 @@ export default function CaseStudiesSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="mt-14 grid gap-8 lg:grid-cols-3"
         >
-          {caseStudies.map((cs) => (
+          {items.map((cs) => (
             <motion.div
               key={cs.id}
               variants={cardVariants}

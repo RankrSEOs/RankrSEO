@@ -18,7 +18,7 @@ interface CaseStudy {
   metrics: { label: string; value: string; icon: string }[]
 }
 
-const caseStudies: CaseStudy[] = [
+const hardcodedCaseStudies: CaseStudy[] = [
   {
     slug: "techflow-seo",
     title: "TechFlow SaaS",
@@ -115,27 +115,42 @@ function MetricIcon({ name }: { name: string }) {
   return <Icon className="size-5" />
 }
 
+async function getCase(slug: string): Promise<CaseStudy | null> {
+  try {
+    const { fetchCaseBySlug } = await import("@/lib/public-api")
+    const api = await fetchCaseBySlug(slug)
+    if (api && api.problem) return api
+  } catch {}
+  return hardcodedCaseStudies.find((c) => c.slug === slug) || null
+}
+
 export async function generateStaticParams() {
-  return caseStudies.map((cs) => ({ slug: cs.slug }))
+  let slugs: string[] = []
+  try {
+    const { fetchAllCaseSlugs } = await import("@/lib/public-api")
+    slugs = await fetchAllCaseSlugs()
+  } catch {}
+  if (!slugs.length) slugs = hardcodedCaseStudies.map((c) => c.slug)
+  return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const cs = caseStudies.find((c) => c.slug === slug)
+  const cs = await getCase(slug)
   if (!cs) return {}
   return {
     title: `${cs.title} - Case Study | RankrSEO`,
-    description: `See how RankrSEO helped ${cs.client} achieve ${cs.results[0]}. Full case study with strategy, results, and key metrics.`,
+    description: `See how RankrSEO helped ${cs.client} achieve ${cs.results[0] || "outstanding results"}. Full case study with strategy, results, and key metrics.`,
     openGraph: {
       title: `${cs.title} - RankrSEO Case Study`,
-      description: `See how RankrSEO helped ${cs.client} achieve ${cs.results[0]}.`,
+      description: `See how RankrSEO helped ${cs.client} achieve ${cs.results[0] || "outstanding results"}.`,
     },
   }
 }
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const cs = caseStudies.find((c) => c.slug === slug)
+  const cs = await getCase(slug)
   if (!cs) notFound()
 
   return (

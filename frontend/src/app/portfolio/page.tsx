@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { X, ArrowUpRight, Search, Filter } from "lucide-react"
+import { X, ArrowUpRight, Search, Loader2 } from "lucide-react"
 import * as Dialog from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
@@ -18,7 +18,24 @@ interface PortfolioItem {
   gradient: string
 }
 
-const portfolioItems: PortfolioItem[] = [
+const GRADIENT_MAP: Record<string, string> = {
+  "techflow-seo": "from-blue-600 to-cyan-500",
+  "greenleaf-web": "from-emerald-600 to-teal-500",
+  "brickhouse-local": "from-amber-600 to-orange-500",
+  "quantum-ppc": "from-violet-600 to-purple-500",
+  "sprout-content": "from-pink-600 to-rose-500",
+  "nexus-seo": "from-indigo-600 to-blue-500",
+  "urban-web": "from-sky-600 to-blue-500",
+  "peak-local": "from-red-600 to-rose-500",
+  "guru": "from-purple-600 to-pink-500",
+  "scrapco": "from-green-600 to-emerald-500",
+  "zubilo-studio": "from-orange-600 to-red-500",
+  "ezdry": "from-blue-600 to-cyan-500",
+  "pogotunes": "from-yellow-500 to-orange-500",
+  "excompany": "from-slate-600 to-gray-500",
+}
+
+const hardcodedPortfolio: PortfolioItem[] = [
   {
     id: "techflow-seo",
     title: "TechFlow SaaS",
@@ -91,6 +108,60 @@ const portfolioItems: PortfolioItem[] = [
     results: ["+190% Direction Requests", "#1 for 23 Location Terms", "8 GBP Optimized"],
     gradient: "from-red-600 to-rose-500",
   },
+  {
+    id: "guru",
+    title: "Gurutron",
+    category: "Web Design",
+    description: "Built a modern NEET/JEE/Board exam preparation platform with intuitive UI/UX, responsive design, and seamless student experience.",
+    client: "Gurutron",
+    results: ["NEET/JEE/Board Prep Platform", "Modern UI/UX Design", "Student-First Experience"],
+    gradient: "from-purple-600 to-pink-500",
+  },
+  {
+    id: "scrapco",
+    title: "ScrapCo",
+    category: "Web Design",
+    description: "Designed and developed a scrap pickup marketplace connecting households, shops, and factories with verified vendors across multiple cities.",
+    client: "ScrapCo",
+    results: ["Scrap Pickup Marketplace", "4.9★ Rating", "Multi-City Operations"],
+    gradient: "from-green-600 to-emerald-500",
+  },
+  {
+    id: "zubilo-studio",
+    title: "Zubilo Studio",
+    category: "Web Design",
+    description: "Created a brand-first creative studio website with custom animations, bold visuals, and a strong portfolio showcase.",
+    client: "Zubilo Studio",
+    results: ["Creative Studio Website", "Custom Animations", "Brand-First Design"],
+    gradient: "from-orange-600 to-red-500",
+  },
+  {
+    id: "ezdry",
+    title: "EZDRY",
+    category: "Web Design",
+    description: "Built a laundry service platform with online booking, location-based service areas, and real-time order tracking.",
+    client: "EZDRY",
+    results: ["Laundry Service Platform", "Online Booking System", "Location-Based Service"],
+    gradient: "from-blue-600 to-cyan-500",
+  },
+  {
+    id: "pogotunes",
+    title: "PogoTunes",
+    category: "Web Design",
+    description: "Designed a fun, ad-free kids' learning platform featuring 500+ educational videos, 50+ interactive games, and multi-language content.",
+    client: "PogoTunes",
+    results: ["500+ Educational Videos", "50+ Interactive Games", "100% Free & Ad-Free"],
+    gradient: "from-yellow-500 to-orange-500",
+  },
+  {
+    id: "excompany",
+    title: "ExCompany",
+    category: "Web Design",
+    description: "Developed a professional corporate website for a business consulting firm with clean typography, structured layouts, and strong branding.",
+    client: "ExCompany",
+    results: ["Corporate Website", "Professional Branding", "Multi-Page Platform"],
+    gradient: "from-slate-600 to-gray-500",
+  },
 ]
 
 const categories = ["All", "SEO", "Web Design", "Local SEO", "PPC", "Content Marketing"]
@@ -98,13 +169,35 @@ const categories = ["All", "SEO", "Web Design", "Local SEO", "PPC", "Content Mar
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState("All")
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
+  const [items, setItems] = useState<PortfolioItem[]>(hardcodedPortfolio)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch("/api/portfolio")
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data?.length) {
+          setItems(data.map((p: Record<string, unknown>) => ({
+            id: p.slug as string,
+            title: p.title as string,
+            category: (p.category || "") as string,
+            description: (p.description || "") as string,
+            client: (p.clientName || "") as string,
+            results: (p.tags || []) as string[],
+            gradient: GRADIENT_MAP[p.slug as string] || "from-primary to-secondary",
+          })))
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
   const filteredItems = useMemo(
     () =>
       activeFilter === "All"
-        ? portfolioItems
-        : portfolioItems.filter((item) => item.category === activeFilter),
-    [activeFilter],
+        ? items
+        : items.filter((item) => item.category === activeFilter),
+    [activeFilter, items],
   )
 
   return (
@@ -160,6 +253,12 @@ export default function PortfolioPage() {
       {/* Portfolio Grid */}
       <section className="bg-background pb-20 sm:pb-28">
         <div className="container px-4">
+          {loading && (
+            <div className="flex justify-center py-20">
+              <Loader2 className="size-8 animate-spin text-muted-foreground" />
+            </div>
+          )}
+          {!loading && (
           <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item) => (
@@ -192,8 +291,9 @@ export default function PortfolioPage() {
               ))}
             </AnimatePresence>
           </motion.div>
+          )}
 
-          {filteredItems.length === 0 && (
+          {!loading && filteredItems.length === 0 && (
             <div className="flex flex-col items-center gap-3 py-20 text-center">
               <Search className="size-12 text-muted-foreground/40" />
               <p className="text-lg font-medium text-foreground">No projects found</p>
