@@ -23,11 +23,11 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "RankrSEO - Digital Marketing Agency | SEO, Web Design & Revenue Growth",
+    default: "RankrSEO — SEO Agency & Digital Marketing Services",
     template: "%s | RankrSEO",
   },
   description:
-    "RankrSEO is a results-driven digital marketing agency founded by Amit Kumar. We help businesses increase online visibility, generate qualified leads, and grow revenue through SEO, web design, content marketing, and paid advertising.",
+    "RankrSEO is a premium SEO agency and digital marketing services company founded by Amit Kumar. We help businesses rank higher, attract more customers, and grow revenue through data-driven SEO, web design, and paid advertising.",
   keywords: [
     "SEO agency", "SEO services", "digital marketing agency", "web design agency",
     "local SEO services", "technical SEO", "content marketing", "PPC advertising",
@@ -42,15 +42,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "RankrSEO",
-    title: "RankrSEO - Digital Marketing Agency | Grow Your Business, Dominate Search",
+    title: "RankrSEO — SEO Agency & Digital Marketing Services",
     description:
-      "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar. Serving clients in USA, UK, Canada, Australia & India.",
+      "Premium SEO agency and digital marketing services. Founded by Amit Kumar. Data-driven strategies for USA, UK, Canada, Australia & India.",
     url: "https://rankrseo.com",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RankrSEO - Digital Marketing Agency",
+    title: "RankrSEO — SEO Agency & Digital Marketing Services",
     description: "Data-driven SEO and digital marketing to grow your revenue. Founded by Amit Kumar.",
     images: ["/og-image.png"],
   },
@@ -67,8 +67,8 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://rankrseo.com" },
   icons: {
-    icon: [{ url: "/favicon.jpg", type: "image/jpeg" }, { url: "/favicon-cropped.jpg", type: "image/jpeg" }, { url: "/favicon.ico", sizes: "any" }],
-    apple: "/favicon.jpg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.jpg", type: "image/jpeg" }, { url: "/favicon.ico", sizes: "any" }],
+    apple: "/favicon.svg",
   },
 }
 

@@ -214,5 +214,5 @@ export const trustBadges = [
 ]
 
 export const clientLogos = [
-  "TechFlow", "GreenLeaf", "BrickHouse", "DataStream", "CloudNine", "PeakPerformance"
+  "ExCompany", "Zubilo Studio", "ScrapCo", "EZ Dry", "PogoTunes", "Safe Raahia"
 ]

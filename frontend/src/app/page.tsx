@@ -1,5 +1,6 @@
 import HeroSection from "@/components/home/HeroSection"
 import SocialProofSection from "@/components/home/SocialProofSection"
+import FeaturedProjectsSection from "@/components/home/FeaturedProjectsSection"
 import ServicesSection from "@/components/home/ServicesSection"
 import CaseStudiesSection from "@/components/home/CaseStudiesSection"
 import FounderSection from "@/components/home/FounderSection"
@@ -13,6 +14,7 @@ export default function Home() {
     <>
       <HeroSection />
       <SocialProofSection />
+      <FeaturedProjectsSection />
       <ServicesSection />
       <CaseStudiesSection />
       <FounderSection />

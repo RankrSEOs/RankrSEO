@@ -50,15 +50,15 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.h1 variants={itemVariants} className="text-center text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
-              We Help Businesses{" "}
-              <span className="gradient-text">Grow Revenue</span>
+              <span className="gradient-text">Search. Rank. Grow.</span>
               <br />
-              Through Data-Driven SEO
+              Data-Driven SEO That Delivers Revenue
             </motion.h1>
 
             <motion.p variants={itemVariants} className="mx-auto mt-6 max-w-2xl text-center text-base text-white/70 sm:text-lg md:text-xl leading-relaxed">
-              Founded by <span className="font-semibold text-white">Amit Kumar</span> — RankrSEO is a premium digital marketing
-              agency that combines technical expertise with data-driven strategies to deliver measurable growth.
+              Founded by <span className="font-semibold text-white">Amit Kumar</span> — RankrSEO is a{" "}
+              <span className="font-semibold text-white">premium SEO agency and digital marketing services</span> company
+              that combines technical expertise with data-driven strategies to deliver measurable growth.
             </motion.p>
 
             <motion.div variants={itemVariants} className="mt-8 flex flex-wrap justify-center gap-4">
