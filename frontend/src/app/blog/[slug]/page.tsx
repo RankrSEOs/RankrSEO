@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import type { Metadata } from "next"
-import { Calendar, User, Tag, ArrowLeft, ArrowRight, Share2, Link as LinkIcon } from "lucide-react"
+import { Calendar, User, Tag, ArrowLeft, ArrowRight, ExternalLink, ArrowUpRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -142,6 +142,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | RankrSEO Blog`,
     description: post.excerpt,
+    alternates: { canonical: `https://rankrseo.blogspot.com/search?q=${post.slug}` },
     openGraph: {
       title: `${post.title} - RankrSEO Blog`,
       description: post.excerpt,
@@ -156,7 +157,6 @@ function MarkdownContent({ content }: { content: string }) {
   const lines = content.trim().split("\n")
   const elements: React.ReactNode[] = []
   let key = 0
-
   for (const line of lines) {
     const trimmed = line.trim()
     if (trimmed.startsWith("## ")) {
@@ -168,72 +168,55 @@ function MarkdownContent({ content }: { content: string }) {
     } else if (trimmed === "") {
       elements.push(<div key={key++} className="h-4" />)
     } else {
-      elements.push(<p key={key++} className="leading-relaxed text-muted-foreground">{trimmed}</p>)
+      elements.push(<p key={key++} className="text-muted-foreground leading-relaxed">{trimmed}</p>)
     }
   }
-
   return <>{elements}</>
 }
 
-function ShareButton({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex size-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-      aria-label={label}
-    >
-      {children}
-    </a>
-  )
+function formatDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = blogPosts.find((p) => p.slug === slug)
-  if (!post) notFound()
-
-  const shareUrl = `https://rankrseo.com/blog/${slug}`
-  const shareText = encodeURIComponent(post.title)
+  if (!post) {
+    redirect("https://rankrseo.blogspot.com")
+  }
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-secondary to-primary pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div className="absolute inset-0 opacity-[0.06]" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }} />
-        <div className="container relative z-10 px-4">
+      {/* Back link */}
+      <section className="bg-background pt-28 pb-4">
+        <div className="container px-4">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
             Back to Blog
           </Link>
-          <div className="mx-auto mt-6 max-w-3xl">
-            <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm">
-              {post.category}
-            </span>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-              {post.title}
-            </h1>
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-white/70">
-              <span className="flex items-center gap-1.5">
-                <User className="size-4" />
+        </div>
+      </section>
+
+      {/* Header */}
+      <section className="bg-background pb-4">
+        <div className="container px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{post.category}</span>
+              <span className="flex items-center gap-1">
+                <Calendar className="size-3.5" />
+                {formatDate(post.date)}
+              </span>
+              <span className="flex items-center gap-1">
+                <User className="size-3.5" />
                 {post.author}
               </span>
-              <span className="flex items-center gap-1.5">
-                <Calendar className="size-4" />
-                {new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Tag className="size-4" />
-                {post.category}
-              </span>
             </div>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{post.title}</h1>
+            <p className="mt-3 text-lg text-muted-foreground">{post.excerpt}</p>
           </div>
         </div>
       </section>
@@ -254,38 +237,38 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="mx-auto max-w-3xl prose-headings:text-foreground prose-p:text-muted-foreground">
             <MarkdownContent content={post.content} />
 
-            {/* Share */}
-            <div className="mt-12 flex items-center gap-3 border-t border-border pt-6">
-              <span className="flex items-center gap-1.5 text-sm font-medium text-foreground">
-                <Share2 className="size-4" />
-                Share
-              </span>
-              <ShareButton href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`} label="Share on LinkedIn">
-                <span className="text-[11px] font-bold">in</span>
-              </ShareButton>
-              <ShareButton href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`} label="Share on Twitter">
-                <span className="text-[11px] font-bold">X</span>
-              </ShareButton>
-              <ShareButton href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} label="Share on Facebook">
-                <span className="text-[11px] font-bold">f</span>
-              </ShareButton>
-              <ShareButton href={`mailto:?subject=${shareText}&body=${shareUrl}`} label="Share via Email">
-                <LinkIcon className="size-4" />
-              </ShareButton>
+            {/* Blogger CTA */}
+            <div className="mt-12 rounded-xl border border-border bg-gradient-to-br from-primary/5 to-accent/5 p-6 text-center">
+              <p className="text-sm text-muted-foreground">
+                This article was originally published on our blog. Visit{" "}
+                <a href="https://rankrseo.blogspot.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
+                  rankrseo.blogspot.com
+                </a>{" "}
+                for more in-depth guides and latest updates.
+              </p>
+              <a
+                href="https://rankrseo.blogspot.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+              >
+                Visit Our Blog
+                <ExternalLink className="size-4" />
+              </a>
             </div>
           </div>
         </div>
       </article>
 
       {/* Author Bio */}
-      <section className="bg-muted/30 py-12">
+      <section className="border-t border-border bg-muted/30 py-12">
         <div className="container px-4">
-          <div className="mx-auto flex max-w-3xl items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm">
-            <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
-              {post.author.split(" ").map((n) => n[0]).join("")}
+          <div className="mx-auto flex max-w-3xl items-start gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
+              {post.author.split(" ").map((n) => n[0]).join("").slice(0, 2)}
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">{post.author}</h3>
+              <p className="font-semibold text-foreground">{post.author}</p>
               <p className="mt-1 text-sm text-muted-foreground">{post.authorBio}</p>
             </div>
           </div>
@@ -293,20 +276,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* Related Posts */}
-      <section className="bg-background py-12 sm:py-16">
+      <section className="bg-background py-16">
         <div className="container px-4">
           <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Related Articles</h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            {relatedPosts.map((rp) => (
+            {relatedPosts.filter((rp) => rp.slug !== slug).slice(0, 3).map((rp) => (
               <Link key={rp.slug} href={`/blog/${rp.slug}`} className="group block">
                 <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                  <div className={cn("flex h-36 items-end bg-gradient-to-br p-4", rp.gradient)}>
-                    <span className="text-sm font-medium text-white/70">Read More</span>
+                  <div className={cn("flex h-32 items-end bg-gradient-to-br p-4", rp.gradient)}>
+                    <h3 className="text-base font-semibold text-white">{rp.title}</h3>
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-semibold text-card-foreground group-hover:text-primary transition-colors line-clamp-2">
-                      {rp.title}
-                    </h3>
+                  <div className="flex items-center gap-1 px-4 py-3 text-sm font-medium text-primary">
+                    Read Article
+                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                   </div>
                 </div>
               </Link>
@@ -316,21 +298,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary to-secondary py-16">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary to-secondary py-20">
         <div className="absolute inset-0 opacity-[0.06]" style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }} />
         <div className="container relative z-10 px-4 text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">Want More Traffic & Leads?</h2>
-          <p className="mx-auto mt-3 max-w-lg text-white/80">Get a free SEO audit and discover opportunities to grow your business.</p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3 text-sm font-semibold text-primary transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Stay Ahead of the Curve</h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
+            Get the latest SEO insights delivered straight to your inbox.
+          </p>
+          <a
+            href="https://rankrseo.blogspot.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-primary transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
           >
-            Get Free Audit
-            <ArrowRight className="size-4" />
-          </Link>
+            Subscribe on Blogger
+            <ExternalLink className="size-4" />
+          </a>
         </div>
       </section>
     </>
