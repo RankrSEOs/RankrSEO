@@ -59,8 +59,8 @@ export default function Navbar() {
         )}
       >
         <div className="container flex h-16 sm:h-20 items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tight">
-            <span className="gradient-text">{siteConfig.name}</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <img src="/logo.svg" alt="RankrSEO" className="h-8 w-auto" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -174,7 +174,7 @@ export default function Navbar() {
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
               >
                 <div className="flex items-center justify-between border-b border-border px-5 h-16">
-                  <span className="text-lg font-bold"><span className="gradient-text">RankrSEO</span></span>
+                  <img src="/logo.svg" alt="RankrSEO" className="h-7 w-auto" />
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-muted"
