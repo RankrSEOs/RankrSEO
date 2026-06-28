@@ -7,6 +7,7 @@ import { X, ArrowUpRight, Search, Loader2 } from "lucide-react"
 import * as Dialog from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
+import PortfolioImage from "@/components/ui/PortfolioImage"
 
 interface PortfolioItem {
   id: string
@@ -17,6 +18,16 @@ interface PortfolioItem {
   results: string[]
   gradient: string
   website?: string
+}
+
+const THEME_COLORS: Record<string, string> = {
+  excompany: "#475569",
+  "zubilo-studio": "#EA580C",
+  scrapco: "#16A34A",
+  ezdry: "#2563EB",
+  pogotunes: "#D97706",
+  saferaahia: "#7C3AED",
+  rankrseo: "#2563EB",
 }
 
 const GRADIENT_MAP: Record<string, string> = {
@@ -200,8 +211,11 @@ export default function PortfolioContent() {
                   onClick={() => setSelectedItem(item)}
                 >
                   <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
-                    <div className={cn("flex h-48 items-end justify-end bg-gradient-to-br p-4", item.gradient)}>
-                      <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    <div className="relative flex h-48 items-end justify-end overflow-hidden p-4" style={{ backgroundColor: THEME_COLORS[item.id] || "#334155" }}>
+                      <div className="absolute inset-0 opacity-20">
+                        <PortfolioImage id={item.id} />
+                      </div>
+                      <span className="relative z-10 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                         {item.category}
                       </span>
                     </div>
@@ -241,8 +255,11 @@ export default function PortfolioContent() {
                   <X className="size-4" />
                 </Dialog.Close>
 
-                <div className={cn("flex h-40 items-end justify-end rounded-xl bg-gradient-to-br p-4 sm:h-52", selectedItem.gradient)}>
-                  <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                <div className="relative flex h-40 items-end justify-end overflow-hidden rounded-xl p-4 sm:h-52" style={{ backgroundColor: THEME_COLORS[selectedItem.id] || "#334155" }}>
+                  <div className="absolute inset-0 opacity-20">
+                    <PortfolioImage id={selectedItem.id} />
+                  </div>
+                  <span className="relative z-10 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                     {selectedItem.category}
                   </span>
                 </div>
