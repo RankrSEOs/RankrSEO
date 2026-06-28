@@ -16,6 +16,9 @@ import {
   Star,
   Zap,
   BarChart,
+  Sparkles,
+  HelpCircle,
+  ChevronDown,
 } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -167,36 +170,27 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#2563EB] py-24 sm:py-32">
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 50%, white 1px, transparent 1px),
-              radial-gradient(circle at 80% 30%, white 1px, transparent 1px)
-            `,
-            backgroundSize: "50px 50px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-40 -right-40 size-96 rounded-full bg-white/5 blur-3xl"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1120] via-[#131C31] to-[#1E3A5F] py-28 sm:py-36">
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 30%, white 1px, transparent 1px)`,
+          backgroundSize: "50px 50px",
+        }} />
+        <motion.div className="absolute -top-40 -right-40 size-96 rounded-full bg-primary/15 blur-[120px] animate-breathe" />
+        <motion.div className="absolute -bottom-40 -left-40 size-96 rounded-full bg-accent/10 blur-[120px] animate-breathe" style={{ animationDelay: "2s" }} />
         <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-white/10">
+            <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
               <Icon className="size-8 text-white" />
             </div>
-            <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.08]">
               {service.title}
             </h1>
-            <p className="mt-6 text-lg text-white/70 sm:text-xl">
+            <p className="mt-6 text-lg text-white/60 sm:text-xl max-w-2xl mx-auto">
               {service.description}
             </p>
           </motion.div>
@@ -204,18 +198,20 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
       </section>
 
       {/* Benefits */}
-      <section className="bg-background py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
               Key Features
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               Everything You Get
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -230,13 +226,13 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="flex items-start gap-3 rounded-xl border border-border bg-card p-5"
+                transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+                className="group flex items-start gap-3 rounded-2xl border border-border/50 bg-card p-5 transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
               >
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <Check className="size-4 text-primary" />
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110">
+                  <Check className="size-4" />
                 </div>
-                <span className="text-sm font-medium text-card-foreground">{feature}</span>
+                <span className="text-sm font-medium text-card-foreground transition-colors duration-300 group-hover:text-primary">{feature}</span>
               </motion.div>
             ))}
           </div>
@@ -244,18 +240,20 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
       </section>
 
       {/* Process */}
-      <section className="bg-muted/30 py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/30" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
               How It Works
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               Our Process
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -264,7 +262,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
           </motion.div>
 
           <div className="relative mt-16">
-            <div className="absolute left-8 top-0 hidden h-full w-px bg-border lg:block" />
+            <div className="absolute left-8 top-0 hidden h-full w-px bg-gradient-to-b from-primary via-accent to-transparent lg:block" />
             <div className="space-y-12">
               {processSteps.map((step, i) => {
                 const StepIcon = step.icon
@@ -274,20 +272,20 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    transition={{ delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                     className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8"
                   >
-                    <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-sm">
+                    <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-2xl border border-border/50 bg-card shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-primary/10">
                       <StepIcon className="size-7 text-primary" />
                     </div>
                     <div className="flex-1 pb-8">
                       <div className="flex items-center gap-3">
-                        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                        <span className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-white shadow-lg">
                           {i + 1}
                         </span>
                         <h3 className="text-xl font-semibold text-foreground">{step.title}</h3>
                       </div>
-                      <p className="mt-2 text-muted-foreground">{step.description}</p>
+                      <p className="mt-2 text-muted-foreground max-w-xl">{step.description}</p>
                     </div>
                   </motion.div>
                 )
@@ -298,18 +296,20 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
       </section>
 
       {/* Pricing */}
-      <section className="bg-background py-20 sm:py-28" id="pricing">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28" id="pricing">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
               Pricing
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               Transparent Pricing
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -324,16 +324,16 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                 className={cn(
-                  "relative flex flex-col rounded-2xl border p-8",
+                  "relative flex flex-col rounded-2xl border p-8 transition-all duration-300",
                   tier.popular
-                    ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
-                    : "border-border bg-card"
+                    ? "border-primary/30 bg-primary/5 shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/15"
+                    : "border-border/50 bg-card hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
                 )}
               >
                 {tier.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-primary to-accent px-4 py-1 text-xs font-semibold text-white shadow-lg">
                     Most Popular
                   </span>
                 )}
@@ -357,10 +357,10 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                   <Link
                     href="/contact"
                     className={cn(
-                      "flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-all",
+                      "flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold transition-all duration-300",
                       tier.popular
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "border border-border bg-background text-foreground hover:bg-muted"
+                        ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                        : "border border-border/50 bg-background text-foreground hover:border-primary/30 hover:shadow-lg"
                     )}
                   >
                     {tier.cta}
@@ -374,91 +374,94 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
       </section>
 
       {/* FAQ */}
-      <section className="bg-muted/30 py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/30" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+              <HelpCircle className="size-3" />
               FAQ
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               Frequently Asked Questions
             </h2>
           </motion.div>
 
-          <div className="mx-auto mt-12 max-w-2xl space-y-4">
+          <div className="mx-auto mt-12 max-w-2xl space-y-3">
             {faqs.map((faq, i) => (
-              <motion.div
+              <motion.details
                 key={faq.q}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-xl border border-border bg-card p-6"
+                className="group rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 [&[open]]:border-primary/20 [&[open]]:shadow-lg [&[open]]:shadow-primary/5"
               >
-                <h3 className="text-sm font-semibold text-foreground">{faq.q}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{faq.a}</p>
-              </motion.div>
+                <summary className="flex cursor-pointer items-center justify-between px-6 py-5 text-sm font-semibold text-card-foreground [&::-webkit-details-marker]:hidden">
+                  <span className="pr-4">{faq.q}</span>
+                  <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-all duration-300 group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-5 pt-0">
+                  <div className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent mb-4" />
+                  <p className="text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
+                </div>
+              </motion.details>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#2563EB] to-[#0F172A] py-20 sm:py-28">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 25% 25%, white 1px, transparent 1px),
-              radial-gradient(circle at 75% 75%, white 1px, transparent 1px)
-            `,
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-20 -right-20 size-80 rounded-full bg-white/5 blur-3xl"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative overflow-hidden py-28 sm:py-36">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#131C31] to-[#1E3A5F]" />
+        <div className="absolute inset-0 opacity-[0.05]" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }} />
+        <motion.div className="absolute -top-20 -right-20 size-80 rounded-full bg-primary/15 blur-[120px] animate-breathe" />
+        <motion.div className="absolute -bottom-20 -left-20 size-80 rounded-full bg-accent/10 blur-[120px] animate-breathe" style={{ animationDelay: "2s" }} />
 
         <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/60 backdrop-blur-sm mb-6">
+              <Sparkles className="size-3 text-accent" />
+              Let&rsquo;s Get Started
+            </span>
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
               Ready to Get Started?
             </h2>
-            <p className="mt-4 text-lg text-white/80">
-              Let&apos;s discuss how {service.title.toLowerCase()} can help grow your business.
+            <p className="mt-4 text-lg text-white/60 max-w-xl mx-auto">
+              Let&rsquo;s discuss how {service.title.toLowerCase()} can help grow your business.
             </p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-8"
+              className="mt-10"
             >
               <Link
                 href="/contact"
-                className={cn(
-                  "inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-[#2563EB]",
-                  "transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
-                )}
+                className="group inline-flex items-center gap-2.5 rounded-2xl bg-white px-8 py-4 text-sm font-semibold text-primary shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
               >
+                <Sparkles className="size-5 text-accent" />
                 Book a Free Strategy Call
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </motion.div>
-            <p className="mt-4 text-xs text-white/60">
+            <p className="mt-4 text-xs text-white/30">
               No commitment &bull; 30-minute call
             </p>
           </motion.div>

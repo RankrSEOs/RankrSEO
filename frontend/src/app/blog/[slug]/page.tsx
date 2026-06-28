@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
-import { Calendar, User, ArrowLeft, ArrowRight, ExternalLink } from "lucide-react"
+import { Calendar, User, ArrowLeft, ArrowRight, ExternalLink, Sparkles } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { fetchPosts, formatDate, getFirstCategory, getBlogGradient } from "@/lib/blogger-feed"
@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {post.author}
               </span>
             </div>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{post.title}</h1>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl leading-[1.15]">{post.title}</h1>
             <p className="mt-3 text-lg text-muted-foreground">{post.summary}</p>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {post.content.length > 2000 && "..."}
             </div>
 
-            <div className="mt-12 rounded-xl border border-border bg-gradient-to-br from-primary/5 to-accent/5 p-6 text-center">
+            <div className="mt-12 rounded-2xl border border-border/50 bg-gradient-to-br from-primary/5 to-accent/5 p-8 text-center transition-all duration-300 hover:shadow-lg">
               <p className="text-sm text-muted-foreground">
                 This article continues on our main blog. Visit{" "}
                 <a href={post.url} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+                className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
               >
                 Read Full Article
                 <ExternalLink className="size-4" />
@@ -115,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </article>
 
-      <section className="border-t border-border bg-muted/30 py-12">
+      <section className="border-t border-border/30 bg-muted/30 py-12">
         <div className="container px-4">
           <div className="mx-auto flex max-w-3xl items-start gap-4">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
@@ -143,13 +143,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 const grad = getBlogGradient(cat)
                 return (
                   <Link key={rp.slug} href={`/blog/${rp.slug}`} className="group block">
-                    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+                    <div className="overflow-hidden rounded-2xl border border-border/50 bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl group-hover:shadow-primary/5">
                       <div className={cn("flex h-32 items-end bg-gradient-to-br p-4", grad)}>
                         <h3 className="text-base font-semibold text-white">{rp.title}</h3>
                       </div>
-                      <div className="flex items-center gap-1 px-4 py-3 text-sm font-medium text-primary">
-                        Read Article
-                        <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="text-sm font-medium text-primary">Read Article</span>
+                        <ArrowRight className="size-3.5 text-primary transition-transform duration-300 group-hover:translate-x-0.5" />
                       </div>
                     </div>
                   </Link>
@@ -160,25 +160,40 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </section>
       )}
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary to-secondary py-20">
-        <div className="absolute inset-0 opacity-[0.06]" style={{
+      <section className="relative overflow-hidden py-28 sm:py-36">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#131C31] to-[#1E3A5F]" />
+        <div className="absolute inset-0 opacity-[0.05]" style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }} />
+        <div className="absolute -top-20 -right-20 size-80 rounded-full bg-primary/15 blur-[120px] animate-breathe" />
+        <div className="absolute -bottom-20 -left-20 size-80 rounded-full bg-accent/10 blur-[120px] animate-breathe" style={{ animationDelay: "2s" }} />
+
         <div className="container relative z-10 px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Stay Ahead of the Curve</h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
-            Get the latest SEO insights delivered straight to your inbox.
-          </p>
-          <a
-            href="https://rankrseo.blogspot.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-primary transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
-          >
-            Subscribe on Blogger
-            <ExternalLink className="size-4" />
-          </a>
+          <div>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/60 backdrop-blur-sm mb-6">
+              <Sparkles className="size-3 text-accent" />
+              Stay Updated
+            </span>
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+              Stay Ahead of the Curve
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-white/60">
+              Get the latest SEO insights delivered straight to your inbox.
+            </p>
+            <div className="mt-10">
+              <a
+                href="https://rankrseo.blogspot.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 rounded-2xl bg-white px-8 py-4 text-sm font-semibold text-primary shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Sparkles className="size-5 text-accent" />
+                Subscribe on Blogger
+                <ExternalLink className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </>

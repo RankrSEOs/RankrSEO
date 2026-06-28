@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Target, Eye, Heart, ArrowRight, ArrowUpRight, Quote } from "lucide-react"
+import { Target, Eye, Heart, ArrowRight, ArrowUpRight, Quote, UserCheck, Sparkles, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import ProcessSection from "@/components/home/ProcessSection"
 import { cn } from "@/lib/utils"
@@ -29,7 +29,7 @@ const values = [
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 }
 
 const stagger = {
@@ -41,70 +41,58 @@ export default function AboutContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#2563EB] py-24 sm:py-32">
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 30% 40%, white 1px, transparent 1px),
-              radial-gradient(circle at 70% 60%, white 1px, transparent 1px)
-            `,
-            backgroundSize: "50px 50px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-40 -left-40 size-96 rounded-full bg-white/5 blur-3xl"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1120] via-[#131C31] to-[#1E3A5F] py-28 sm:py-36">
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: `radial-gradient(circle at 30% 40%, white 1px, transparent 1px), radial-gradient(circle at 70% 60%, white 1px, transparent 1px)`,
+          backgroundSize: "50px 50px",
+        }} />
+        <motion.div className="absolute -top-40 -left-40 size-96 rounded-full bg-primary/15 blur-[120px] animate-breathe" />
+        <motion.div className="absolute -bottom-40 -right-40 size-96 rounded-full bg-accent/10 blur-[120px] animate-breathe" style={{ animationDelay: "2s" }} />
         <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium text-white/80">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/60 backdrop-blur-sm">
+              <UserCheck className="size-3" />
               About RankrSEO
             </span>
-            <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              We Build Brands That
-              <span className="text-[#14B8A6]"> Rank Higher</span>
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.08]">
+              We Build Brands That{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-white to-teal-300 bg-clip-text text-transparent">Rank Higher</span>
             </h1>
-            <p className="mt-6 text-lg text-white/70 sm:text-xl">
+            <p className="mt-6 text-lg text-white/60 sm:text-xl max-w-2xl mx-auto">
               RankrSEO is a boutique digital marketing agency obsessed with one
-              thing: helping businesses like yours dominate search results and
-              grow revenue.
+              thing: helping businesses like yours dominate search results and grow revenue.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Founder Story */}
-      <section className="bg-background py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
+        <div className="container relative z-10 px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl"
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+              className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-3xl"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 via-[#0F172A]/40 to-[#14B8A6]/20" />
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage: `
-                    radial-gradient(circle at 20% 30%, #2563EB 0%, transparent 50%),
-                    radial-gradient(circle at 80% 70%, #14B8A6 0%, transparent 50%)
-                  `,
-                }}
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <Quote className="size-12 text-white/40" />
-                <p className="mt-4 max-w-[200px] text-center text-sm text-white/60 italic">
-                  "Data without action is just noise."
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/40 to-accent/20" />
+              <div className="absolute inset-0 opacity-30" style={{
+                backgroundImage: `radial-gradient(circle at 20% 30%, #2563EB 0%, transparent 50%), radial-gradient(circle at 80% 70%, #14B8A6 0%, transparent 50%)`,
+              }} />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+                <div className="rounded-full bg-white/10 p-4 backdrop-blur-sm mb-4">
+                  <Quote className="size-8 text-white/60" />
+                </div>
+                <p className="max-w-[220px] text-center text-sm text-white/70 italic leading-relaxed">
+                  &ldquo;Data without action is just noise. We turn insights into growth.&rdquo;
                 </p>
               </div>
             </motion.div>
@@ -113,21 +101,22 @@ export default function AboutContent() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             >
-              <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+                <UserCheck className="size-3" />
                 Founder & CEO
               </span>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                 Meet Amit Kumar
               </h2>
               <p className="mt-2 text-muted-foreground">
                 Founder & CEO, RankrSEO
               </p>
-              <div className="mt-6 space-y-4 text-muted-foreground">
+              <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   Amit Kumar is the Founder & CEO of RankrSEO. He holds a
-                  Master's degree in Computer Applications (MCA) and brings
+                  Master&rsquo;s degree in Computer Applications (MCA) and brings
                   expertise in SEO, web development, and digital strategy. With
                   years of hands-on experience across technical SEO, WordPress
                   development, content marketing, and paid advertising, Amit has
@@ -163,17 +152,22 @@ export default function AboutContent() {
       </section>
 
       {/* Mission / Vision / Values */}
-      <section className="bg-muted/50 py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/30" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+              <BarChart3 className="size-3" />
               What Drives Us
+            </span>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Our Mission, Vision & Values
             </h2>
             <p className="mt-4 text-muted-foreground">
               Our mission, vision, and values shape every strategy we build
@@ -191,18 +185,15 @@ export default function AboutContent() {
               <motion.div
                 key={item.title}
                 variants={fadeUp}
-                className={cn(
-                  "group rounded-xl border border-border bg-card p-8 transition-all duration-300",
-                  "hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
-                )}
+                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20"
               >
-                <div className="flex size-14 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                <div className="flex size-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-lg group-hover:shadow-primary/20">
                   <item.icon className="size-7" />
                 </div>
-                <h3 className="mt-5 text-xl font-semibold text-card-foreground">
+                <h3 className="mt-5 text-xl font-semibold text-card-foreground transition-colors duration-300 group-hover:text-primary">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-muted-foreground">
+                <p className="mt-3 text-muted-foreground leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
@@ -212,20 +203,25 @@ export default function AboutContent() {
       </section>
 
       {/* Real Projects */}
-      <section className="bg-background py-20 sm:py-28">
-        <div className="container px-4">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
+        <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Real Projects We've Built
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+              <Sparkles className="size-3" />
+              Our Work
+            </span>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Real Projects We&rsquo;ve Built
             </h2>
             <p className="mt-4 text-muted-foreground">
-              We don't just talk about SEO — we design, develop, and optimize real websites for real businesses
+              We don&rsquo;t just talk about SEO — we design, develop, and optimize real websites for real businesses
             </p>
           </motion.div>
 
@@ -233,33 +229,40 @@ export default function AboutContent() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             {[
-              { name: "ExCompany", url: "https://www.excompany.in/", tag: "Corporate" },
-              { name: "Zubilo Studio", url: "https://www.zubilo.studio/", tag: "Web Design" },
-              { name: "ScrapCo", url: "https://www.scrapco.app/", tag: "Web Dev" },
-              { name: "EZ Dry", url: "https://www.ezdry.in/", tag: "Web Design" },
-              { name: "PogoTunes", url: "https://pogotunes.vercel.app/", tag: "Web Dev" },
-              { name: "Safe Raahia", url: "https://saferaahia.netlify.app/", tag: "Web Dev" },
-              { name: "RankrSEO", url: "https://rankrseo.vercel.app/", tag: "Full Service" },
-            ].map((project) => (
-              <a
+              { name: "ExCompany", url: "https://www.excompany.in/", tag: "Corporate", color: "#475569" },
+              { name: "Zubilo Studio", url: "https://www.zubilo.studio/", tag: "Web Design", color: "#EA580C" },
+              { name: "ScrapCo", url: "https://www.scrapco.app/", tag: "Web Dev", color: "#16A34A" },
+              { name: "EZ Dry", url: "https://www.ezdry.in/", tag: "Web Design", color: "#2563EB" },
+              { name: "PogoTunes", url: "https://pogotunes.vercel.app/", tag: "Web Dev", color: "#D97706" },
+              { name: "Safe Raahia", url: "https://saferaahia.netlify.app/", tag: "Web Dev", color: "#7C3AED" },
+              { name: "RankrSEO", url: "https://rankrseo.vercel.app/", tag: "Full Service", color: "#14B8A6" },
+            ].map((project, i) => (
+              <motion.a
                 key={project.name}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary/5"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-5 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20"
               >
-                <div>
-                  <p className="font-semibold text-card-foreground group-hover:text-primary transition-colors">
-                    {project.name}
-                  </p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{project.tag}</p>
+                <div className="absolute inset-0 opacity-[0.04] transition-opacity duration-300 group-hover:opacity-[0.08]" style={{ backgroundColor: project.color }} />
+                <div className="relative z-10 flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-card-foreground group-hover:text-primary transition-colors">
+                      {project.name}
+                    </p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{project.tag}</p>
+                  </div>
+                  <ArrowUpRight className="size-4 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
-                <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              </a>
+              </motion.a>
             ))}
           </motion.div>
 
@@ -268,13 +271,13 @@ export default function AboutContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-8 text-center"
+            className="mt-10 text-center"
           >
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+              className="group inline-flex items-center gap-2 rounded-2xl border border-border bg-card px-8 py-3.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
             >
-              View Full Portfolio <ArrowUpRight className="size-3.5" />
+              View Full Portfolio <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </motion.div>
         </div>
@@ -284,58 +287,51 @@ export default function AboutContent() {
       <ProcessSection />
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#2563EB] to-[#0F172A] py-20 sm:py-28">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 25% 25%, white 1px, transparent 1px),
-              radial-gradient(circle at 75% 75%, white 1px, transparent 1px)
-            `,
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-20 -right-20 size-80 rounded-full bg-white/5 blur-3xl"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative overflow-hidden py-28 sm:py-36">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#131C31] to-[#1E3A5F]" />
+        <div className="absolute inset-0 opacity-[0.05]" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }} />
+        <motion.div className="absolute -top-20 -right-20 size-80 rounded-full bg-primary/15 blur-[120px] animate-breathe" />
+        <motion.div className="absolute -bottom-20 -left-20 size-80 rounded-full bg-accent/10 blur-[120px] animate-breathe" style={{ animationDelay: "2s" }} />
 
         <div className="container relative z-10 px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/60 backdrop-blur-sm mb-6">
+              <Sparkles className="size-3 text-accent" />
+              Let&rsquo;s Collaborate
+            </span>
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
               Ready to Work Together?
             </h2>
-            <p className="mt-4 text-lg text-white/80">
-              Let's build a strategy that takes your business to the top of
-              search results
+            <p className="mt-4 text-lg text-white/60 max-w-xl mx-auto">
+              Let&rsquo;s build a strategy that takes your business to the top of search results
             </p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-8"
+              className="mt-10"
             >
               <Link
                 href="/contact"
-                className={cn(
-                  "inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-[#2563EB]",
-                  "transition-all hover:bg-white/90 hover:shadow-lg active:translate-y-px"
-                )}
+                className="group inline-flex items-center gap-2.5 rounded-2xl bg-white px-8 py-4 text-sm font-semibold text-primary shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
               >
+                <Sparkles className="size-5 text-accent" />
                 Get in Touch
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </motion.div>
-            <p className="mt-4 text-xs text-white/60">
-              Free consultation &bull; No obligation
+            <p className="mt-4 text-xs text-white/30">
+              Free consultation &bull; No obligation &bull; 30-minute strategy call
             </p>
           </motion.div>
         </div>
