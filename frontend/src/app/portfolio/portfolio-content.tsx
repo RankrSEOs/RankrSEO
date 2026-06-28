@@ -3,7 +3,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { X, ArrowUpRight, Search, Loader2, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
+import {
+  X, ArrowUpRight, Search, Loader2, ChevronLeft, ChevronRight,
+} from "lucide-react"
 import * as Dialog from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
@@ -100,7 +102,6 @@ const hardcodedPortfolio: PortfolioItem[] = [
 ]
 
 const categories = ["All", "Web Design", "Web Development", "Full Service", "Corporate"]
-
 const caseStudySlugs = new Set(["techflow-seo", "greenleaf-web", "brickhouse-local"])
 
 export default function PortfolioContent() {
@@ -125,7 +126,7 @@ export default function PortfolioContent() {
 
   useEffect(() => {
     if (carouselPaused || items.length < 2) return
-    const id = setInterval(handleCarouselNext, 5000)
+    const id = setInterval(handleCarouselNext, 6000)
     return () => clearInterval(id)
   }, [carouselPaused, items.length, handleCarouselNext])
 
@@ -158,38 +159,188 @@ export default function PortfolioContent() {
     [activeFilter, items],
   )
 
+  const currentItem = items[carouselIndex]
+
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-secondary to-primary pt-32 pb-20 sm:pt-40 sm:pb-28">
-        <div className="absolute inset-0 opacity-[0.06]" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }} />
-        <div className="container relative z-10 px-4 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl"
+      {/* ────────────── HERO CAROUSEL ────────────── */}
+      <section
+        className="relative flex min-h-[70vh] items-center overflow-hidden sm:min-h-[80vh]"
+        style={{ backgroundColor: THEME_COLORS[currentItem?.id] || "#0F172A" }}
+      >
+        {/* Decorative grid pattern */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px), radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
+
+        {/* Animated content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentItem?.id || "empty"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="container relative z-10 px-4 py-24 sm:py-32"
           >
-            Our Portfolio
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mx-auto mt-4 max-w-2xl text-lg text-white/80"
-          >
-            Real results for real businesses. Explore our case studies and see how we help our clients dominate search and grow revenue.
-          </motion.p>
+            {currentItem && (
+              <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
+                {/* Left — text */}
+                <div>
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="mb-4 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm"
+                  >
+                    {currentItem.category}
+                  </motion.span>
+
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+                  >
+                    {currentItem.title}
+                  </motion.h1>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-4 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg"
+                  >
+                    {currentItem.description}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="mt-8 flex flex-wrap items-center gap-4"
+                  >
+                    {currentItem.results.slice(0, 3).map((r) => (
+                      <span
+                        key={r}
+                        className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm"
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="mt-8 flex flex-wrap items-center gap-4"
+                  >
+                    <button
+                      onClick={() => setSelectedItem(currentItem)}
+                      className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-lg transition-all hover:bg-white/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                    >
+                      View Details
+                      <ArrowUpRight className="size-4" />
+                    </button>
+                    {currentItem.website && (
+                      <a
+                        href={currentItem.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                      >
+                        Visit Website
+                        <ArrowUpRight className="size-3.5" />
+                      </a>
+                    )}
+                  </motion.div>
+                </div>
+
+                {/* Right — SVG illustration */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.25, duration: 0.6 }}
+                  className="hidden justify-center md:flex"
+                >
+                  <div className="w-full max-w-[420px] opacity-30">
+                    <PortfolioImage id={currentItem.id} />
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Carousel controls — bottom */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-4 bg-gradient-to-t from-black/40 to-transparent px-4 pb-8 pt-16">
+          {/* Dots */}
+          <div className="flex items-center gap-2">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCarouselIndex(i)}
+                className={cn(
+                  "rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                  i === carouselIndex
+                    ? "h-2.5 w-8 bg-white"
+                    : "h-2.5 w-2.5 bg-white/40 hover:bg-white/70",
+                )}
+                aria-label={`Go to project ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Nav buttons */}
+          <div className="ml-4 flex items-center gap-1">
+            <button
+              onClick={handleCarouselPrev}
+              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-label="Previous project"
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+            <button
+              onClick={handleCarouselNext}
+              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-label="Next project"
+            >
+              <ChevronRight className="size-4" />
+            </button>
+            <button
+              onClick={() => setCarouselPaused((p) => !p)}
+              className="ml-1 flex size-9 items-center justify-center rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-label={carouselPaused ? "Resume auto-play" : "Pause auto-play"}
+            >
+              {carouselPaused ? "▶" : "❚❚"}
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* Filter Bar */}
-      <section className="bg-background pt-10 pb-6">
+      {/* ────────────── ALL PROJECTS ────────────── */}
+      <section className="bg-background py-20 sm:py-28">
         <div className="container px-4">
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* Section header */}
+          <div className="mb-12 text-center">
+            <span className="mb-3 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+              Our Work
+            </span>
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+              All Projects
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+              Browse our complete portfolio across every category.
+            </p>
+          </div>
+
+          {/* Filter bar */}
+          <div className="mb-10 flex flex-wrap items-center justify-center gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -205,175 +356,82 @@ export default function PortfolioContent() {
               </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Auto Carousel — one project at a time */}
-      <section className="bg-background pb-2">
-        <div className="container px-4">
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={items[carouselIndex]?.id || "empty"}
-                initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="flex flex-col md:flex-row"
-              >
-                {/* SVG side */}
-                {items[carouselIndex] && (
-                  <div
-                    className="flex min-h-[260px] items-center justify-center md:w-2/5"
-                    style={{ backgroundColor: THEME_COLORS[items[carouselIndex].id] || "#334155" }}
-                  >
-                    <div className="w-4/5 max-w-[280px] opacity-25">
-                      <PortfolioImage id={items[carouselIndex].id} />
-                    </div>
-                  </div>
-                )}
-
-                {/* Content side */}
-                {items[carouselIndex] && (
-                  <div className="flex flex-1 flex-col justify-center p-6 sm:p-8 lg:p-10">
-                    <span className="mb-2 inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                      {items[carouselIndex].category}
-                    </span>
-                    <h3 className="text-2xl font-bold text-foreground sm:text-3xl">
-                      {items[carouselIndex].title}
-                    </h3>
-                    <p className="mt-3 max-w-xl text-muted-foreground">
-                      {items[carouselIndex].description}
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {items[carouselIndex].results.slice(0, 3).map((r) => (
-                        <span key={r} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-                          {r}
-                        </span>
-                      ))}
-                      {items[carouselIndex].results.length > 3 && (
-                        <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-                          +{items[carouselIndex].results.length - 3}
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-6 flex items-center gap-4">
-                      <button
-                        onClick={() => setSelectedItem(items[carouselIndex])}
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                      >
-                        View Details
-                        <ArrowUpRight className="size-4" />
-                      </button>
-                      {items[carouselIndex].website && (
-                        <a
-                          href={items[carouselIndex].website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                        >
-                          Visit Website
-                          <ArrowUpRight className="size-3.5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Controls overlay */}
-            <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-2 border-t border-border bg-background/80 px-4 py-3 backdrop-blur-sm">
-              <div className="flex items-center gap-1.5">
-                {items.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCarouselIndex(i)}
-                    className={cn(
-                      "size-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
-                      i === carouselIndex
-                        ? "w-6 bg-primary"
-                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50",
-                    )}
-                    aria-label={`Go to project ${i + 1}`}
-                  />
-                ))}
-              </div>
-
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setCarouselPaused((p) => !p)}
-                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
-                  aria-label={carouselPaused ? "Resume auto-play" : "Pause auto-play"}
-                >
-                  {carouselPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
-                </button>
-                <button
-                  onClick={handleCarouselPrev}
-                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
-                  aria-label="Previous project"
-                >
-                  <ChevronLeft className="size-4" />
-                </button>
-                <button
-                  onClick={handleCarouselNext}
-                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
-                  aria-label="Next project"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Portfolio Grid */}
-      <section className="bg-background pb-20 sm:pb-28">
-        <div className="container px-4">
+          {/* Loading state */}
           {loading && (
             <div className="flex justify-center py-20">
               <Loader2 className="size-8 animate-spin text-muted-foreground" />
             </div>
           )}
+
+          {/* Grid */}
           {!loading && (
-          <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <AnimatePresence mode="popLayout">
-              {filteredItems.map((item) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className="group cursor-pointer"
-                  onClick={() => setSelectedItem(item)}
-                >
-                  <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
-                    <div className="relative flex h-48 items-end justify-end overflow-hidden p-4" style={{ backgroundColor: THEME_COLORS[item.id] || "#334155" }}>
-                      <div className="absolute inset-0 opacity-20">
-                        <PortfolioImage id={item.id} />
+            <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <AnimatePresence mode="popLayout">
+                {filteredItems.map((item, idx) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.35, delay: idx * 0.05 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedItem(item)}
+                  >
+                    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5">
+                      {/* SVG header */}
+                      <div
+                        className="relative flex aspect-[4/3] items-center justify-center overflow-hidden p-8"
+                        style={{ backgroundColor: THEME_COLORS[item.id] || "#334155" }}
+                      >
+                        <div className="w-full max-w-[200px] opacity-25 transition-all duration-500 group-hover:scale-110 group-hover:opacity-35">
+                          <PortfolioImage id={item.id} />
+                        </div>
+                        <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                          {item.category}
+                        </span>
                       </div>
-                      <span className="relative z-10 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="text-lg font-semibold text-card-foreground">{item.title}</h3>
-                      <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
-                      <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
-                        View Project
-                        <ArrowUpRight className="size-3.5" />
+
+                      {/* Card body */}
+                      <div className="p-5">
+                        <h3 className="text-lg font-semibold text-card-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                          {item.description}
+                        </p>
+
+                        {/* Result tags */}
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {item.results.slice(0, 2).map((r) => (
+                            <span
+                              key={r}
+                              className="rounded-full bg-primary/5 px-2.5 py-0.5 text-[11px] font-medium text-primary"
+                            >
+                              {r}
+                            </span>
+                          ))}
+                          {item.results.length > 2 && (
+                            <span className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
+                              +{item.results.length - 2}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
+                          View Project
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
 
+          {/* Empty state */}
           {!loading && filteredItems.length === 0 && (
             <div className="flex flex-col items-center gap-3 py-20 text-center">
               <Search className="size-12 text-muted-foreground/40" />
@@ -384,22 +442,25 @@ export default function PortfolioContent() {
         </div>
       </section>
 
-      {/* Detail Modal */}
+      {/* ────────────── DETAIL MODAL ────────────── */}
       <Dialog.Root open={!!selectedItem} onOpenChange={(open) => { if (!open) setSelectedItem(null) }}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
           <Dialog.Content className="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[95vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border bg-background p-6 shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:p-8">
             {selectedItem && (
               <>
-                <Dialog.Close className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground">
+                <Dialog.Close className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground">
                   <X className="size-4" />
                 </Dialog.Close>
 
-                <div className="relative flex h-40 items-end justify-end overflow-hidden rounded-xl p-4 sm:h-52" style={{ backgroundColor: THEME_COLORS[selectedItem.id] || "#334155" }}>
-                  <div className="absolute inset-0 opacity-20">
+                <div
+                  className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl p-8 sm:aspect-[3/1]"
+                  style={{ backgroundColor: THEME_COLORS[selectedItem.id] || "#334155" }}
+                >
+                  <div className="w-full max-w-[200px] opacity-25 sm:max-w-[260px]">
                     <PortfolioImage id={selectedItem.id} />
                   </div>
-                  <span className="relative z-10 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                  <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                     {selectedItem.category}
                   </span>
                 </div>
