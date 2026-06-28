@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import BlogContent from "./blog-content"
 import { fetchPosts } from "@/lib/blogger-feed"
 
+export const revalidate = 300
+
 export const metadata: Metadata = {
   title: "Blog",
   description: "Insights, strategies, and expert advice to help you master SEO and digital marketing.",

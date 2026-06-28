@@ -6,6 +6,8 @@ import { Calendar, User, ArrowLeft, ArrowRight, ExternalLink } from "lucide-reac
 import { cn } from "@/lib/utils"
 import { fetchPosts, formatDate, getFirstCategory, getBlogGradient } from "@/lib/blogger-feed"
 
+export const revalidate = 300
+
 export async function generateStaticParams() {
   const posts = await fetchPosts()
   return posts.map((post) => ({ slug: post.slug }))
